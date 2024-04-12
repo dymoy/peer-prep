@@ -1,0 +1,27 @@
+[ 
+    {
+        "username": "joesmith123",
+        "email": "joesmith123@gmail.com",
+        "password": "234Radish!"
+    },
+    {
+        "username": "bobjones45",
+        "email": "bobjones45@gmail.com",
+        "password": "360degrees?"
+    },
+    {
+        "username": "taylorswift",
+        "email": "taylorswift@gmail.com",
+        "password": "22feeling."
+    },
+    {
+        "username": "georgejungle",
+        "email": "georgejungle@gmail.com",
+        "password": "356Icecream!"
+    },
+    {
+        "username": "richardpots",
+        "email": "richardpots@gmail.com",
+        "password": "hello1144!"
+    }
+]

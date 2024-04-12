@@ -26,7 +26,8 @@ const sessionSchema = new Schema({
         required: true
     },
     host: {
-        type: Schema.Types.ObjectId,
+        // Reference the host name, NOT the ID
+        type: String,
         ref: 'User',
     },
     attendees: [
