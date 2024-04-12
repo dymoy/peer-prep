@@ -1,0 +1,26 @@
+[ 
+    {
+        "title": "How to ace a coding exam",
+        "description": "I'll teach you how to pass with flying colors",
+        "unit": "JavaScript",
+        "start_time": "4/15/2024 4:00PM",
+        "end_time": "4/15/2024 5:00PM",
+        "link": "http://acecode.zoom.com"
+    },
+    {
+        "title": "MERN Stack Essentials",
+        "description": "Reviewing the basics of MERN",
+        "unit": "MERN",
+        "start_time": "4/20/2024 7:00PM",
+        "end_time": "4/20/2024 9:00PM",
+        "link": "http://MERNgroup.zoom.com"
+    },
+    {
+        "title": "No thanks NoSQL",
+        "description": "Wrapping our heads around NoSQL",
+        "unit": "NoSQL",
+        "start_time": "5/1/2024 2:00PM",
+        "end_time": "5/1/2024 3:00PM",
+        "link": "http://NOSQLstudy.zoom.com"
+    }
+]

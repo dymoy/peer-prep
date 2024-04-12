@@ -1,0 +1,22 @@
+[
+    {
+        "title": "How to create a for loop",
+        "topics": "Loops, JavaScript",
+        "content": "I'm puzzled on how to create a for loop in JavaScript. Please help!"
+    },
+    {
+        "title": "How to install MySQL",
+        "topics": "MySQL",
+        "content": "I can't figure out how to download MySQL. The documentation ain't cutting it."
+    },
+    {
+        "title": "CSS is a mess",
+        "topics": "CSS",
+        "content": "My design is bad and I can't figure out margins or padding or borders. Can someone break this out for me?"
+    },
+    {
+        "title": "JQuery Help",
+        "topics": "JQuery",
+        "content": "How do I call HTML elements using JQuery? I heard there were two common ways?"
+    }
+]
