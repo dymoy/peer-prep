@@ -19,7 +19,26 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  /* TODO: Sessions, Posts, Comments */
+  session: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Session'
+    }
+  ],
+  posts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Post'
+    }
+  ],
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Comment'
+    }
+  ],
+
+  /* TODO: Comments */
   
 });
 

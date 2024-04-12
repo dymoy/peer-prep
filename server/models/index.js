@@ -1,3 +1,6 @@
 const User = require('./User');
+const Session = require('./Session');
+const Post = require('./Post');
+const Comment = require('./Comment');
 
-module.exports = { User };
+module.exports = { User, Session, Post, Comment };
