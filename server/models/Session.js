@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const  {calculateStartandEndDate}  = require('../utils/dateUtils');
 
 const sessionSchema = new Schema({
     title: {
@@ -17,9 +18,15 @@ const sessionSchema = new Schema({
         type: Date,
         required: true
     },
-    end_time: {
-        type: Date,
-        required: true
+    durationInHours: {
+        type: Number,
+        
+    },
+    durationInMinutes: {
+        type: Number
+    },
+    end_date: {
+        type: Date 
     },
     link: {
         type: String, 
@@ -38,6 +45,17 @@ const sessionSchema = new Schema({
 });
 
 // TODO: Create helper function to create Date object for start_time and end_time 
+// 
+sessionSchema.pre("save", function(next) {
+    if (this.durationInHours || this.durationInMinutes) {
+        const { startDate, endDate } = calculateStartandEndDate(this.start_time, this.durationInHours || 0, this.durationInMinutes || 0);
+        this.start_time = startDate;
+        this.end_date = endDate;
+    }
+    next();
+});
+
+
 
 const Session = model('Session', sessionSchema);
 
