@@ -5,15 +5,16 @@ const postSchema = new Schema({
         type: String,
         required: true
     },
-    topic: {
+    topics: {
         type: String
     },
     content: {
         type: String,
         required: true
     },
-    user: {
-        type: Schema.Types.ObjectId,
+    author: {
+        // Reference the user name, NOT the ID
+        type: String,
         ref: 'User'
     },
     created_at: { 
@@ -25,10 +26,12 @@ const postSchema = new Schema({
         type: Boolean,
         default: false
     },
-    comments: {
-        type: Schema.Types.ObjectId,
-        ref: 'Comment'
-    }
+    comments: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Comment'
+        }
+    ]
 });
 
 const Post = model('Post', postSchema);

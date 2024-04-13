@@ -19,15 +19,17 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  session: [
+  sessions: [
     {
-      type: Schema.Types.ObjectId,
+      // Reference the session name, NOT the ID
+      type: String,
       ref: 'Session'
     }
   ],
   posts: [
     {
-      type: Schema.Types.ObjectId,
+      // Reference the user name, NOT the ID
+      type: String,
       ref: 'Post'
     }
   ],
