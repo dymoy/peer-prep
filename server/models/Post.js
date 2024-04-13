@@ -1,26 +1,27 @@
 const { Schema, model } = require('mongoose');
+const formatDate = require('../utils/formatDate');
 
 const postSchema = new Schema({
     title: {
         type: String,
         required: true
     },
-    topics: {
-        type: String
-    },
     content: {
         type: String,
         required: true
     },
+    topics: {
+        type: String
+    },
     author: {
-        // Reference the user name, NOT the ID
+        // TODO: Reference the user name, NOT the ID
         type: String,
         ref: 'User'
     },
     created_at: { 
         type: Date,
-        default: Date.now
-        // TODO: get: (timestamp) => dateFormat(timestamp),
+        default: Date.now,
+        get: (created_At) => formatDate(created_At),
     }, 
     solved: { 
         type: Boolean,

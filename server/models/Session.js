@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const { formatSessionDates } = require('../utils/formatDate');
+const formatDate = require('../utils/formatDate');
 
 //const { calculateStartandEndDate } = require('../utils/dateUtils');
 const sessionSchema = new Schema({
@@ -15,7 +15,7 @@ const sessionSchema = new Schema({
         type: String, 
         required: true
     },
-    start_time: {
+    start_date: {
         type: Date,
         required: true
     },
@@ -59,24 +59,20 @@ const sessionSchema = new Schema({
 }); */
 
 sessionSchema.pre('validate', function(next) {
-    const startDate = new Date(this.start_time);
+    const startDate = new Date(this.start_date);
     const endDate = new Date(this.end_date);
-    this.start_time = startDate;
+    this.start_date = startDate;
     this.end_date = endDate;
     next();
 });
 
-sessionSchema.pre('save', async function(next) {
-    const formattedDates = formatSessionDates(this.start_time, this.end_date);
-    this.start_time = formattedDates.formattedStart;
+sessionSchema.pre('save', function(next) {
+    const formattedDates = formatDate(this.start_date, this.end_date);
+    this.start_date = formattedDates.formattedStart;
     this.end_date = formattedDates.formattedEnd;
     next();
 });
 
-
-
-
 const Session = model('Session', sessionSchema);
 
 module.exports = Session;
-
