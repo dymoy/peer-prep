@@ -83,10 +83,9 @@ const typeDefs = gql`
     
     type Query { 
         me: User
-        user(username: String!): User
-        sessions(username: String!): Session
-        posts(username: String!): Post
-        comments(_id: ID!): Comment
+        sessions(username: String!): [Session]
+        posts(username: String!): [Post]
+        comments(_id: ID!): [Comment]
     }
 
     type Mutation {
