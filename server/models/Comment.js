@@ -5,16 +5,17 @@ const commentSchema = new Schema({
         type: String,
         required: true
     },
-    created_at: {
+    created_At: {
         type: Date,
         default: Date.now,
-        // TODO: get
+        get: (created_At) => formatDate(created_At),
     }, 
     user: { 
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    post: {
+    post_Id: {
+        // TODO: refactor to the post ID string? 
         type: Schema.Types.ObjectId,
         ref: 'Post'
     },

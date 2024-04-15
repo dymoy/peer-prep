@@ -14,7 +14,8 @@ module.exports = { calculateStartandEndDate };
 // Import date-fns for handy formatting functions
 const { format } = require('date-fns');
 
-function formatSessionDates(startDate, endDate) {
+// TODO: Reformat this to be usable by Post and Comment models
+function formatDate(startDate, endDate) {
     const start = new Date(startDate);
     const end = new Date(endDate);
     const formattedStart = format(start, 'PPpp');
@@ -50,7 +51,7 @@ const addDateSuffix = (date) => {
   //checks first if the input is a double digit number that starts with one, if not it re-assigns the variable to be itself with a indent
   
   // function to format a timestamp, accepts the timestamp and an `options` object as parameters
-  module.exports = {formatSessionDates, formatDate: (
+  module.exports = { formatDate, dateFormat: (
             
     timestamp,
     { monthLength = 'short', dateSuffix = true } = {}
