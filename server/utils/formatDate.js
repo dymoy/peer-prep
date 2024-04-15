@@ -14,7 +14,8 @@ module.exports = { calculateStartandEndDate };
 // Import date-fns for handy formatting functions
 const { format } = require('date-fns');
 
-function formatSessionDates(startDate, endDate) {
+// TODO: Reformat this to be usable by Post and Comment models
+function formatDate(startDate, endDate) {
     const start = new Date(startDate);
     const end = new Date(endDate);
     const formattedStart = format(start, 'PPpp');
@@ -26,5 +27,5 @@ function formatSessionDates(startDate, endDate) {
 }
 
 module.exports = {
-    formatSessionDates
+    formatDate
 };
