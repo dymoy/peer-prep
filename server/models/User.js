@@ -39,9 +39,6 @@ const userSchema = new Schema({
       ref: 'Comment'
     }
   ],
-
-  /* TODO: Comments */
-  
 });
 
 /* Hash entered password before entering it into the db */

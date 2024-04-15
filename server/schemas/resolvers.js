@@ -88,7 +88,7 @@ const resolvers = {
                 await User.findOneAndUpdate(
                     { _id: context.user._id },
                     { $addToSet: { sessions: session._id }}
-                )
+                );
                 
                 return session;
             }
@@ -97,7 +97,7 @@ const resolvers = {
 
         removeSession: async (parent, { sessionId }, context) => {
             if (context.user) {
-                // Delete and store the deleted document
+                // Delete and store the requested session document
                 const session = await Session.findOneAndDelete({
                     _id: sessionId
                 });
@@ -106,9 +106,69 @@ const resolvers = {
                 await User.findOneAndUpdate(
                     { _id: context.user._id },
                     { $pull: { sessions: session._id }}
-                )
+                );
 
                 return session;
+            }
+            throw AuthenticationError;
+        }, 
+
+        addPost: async (parent, { postInput }, context) => {
+            if (context.user) {
+                // Create the post document 
+                const post = await Post.create({
+                    postInput
+                });
+
+                // Update the user's post array 
+                await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $addToSet: { posts: post._id }}
+                ); 
+
+                return post;
+            }
+            throw AuthenticationError;
+        },
+
+        removePost: async (parent, { postId }, context) => {
+            if (context.user) {
+                // Delete and store the requested post document
+                const post = await Post.findOneAndDelete({
+                    _id: postId
+                });
+
+                // Update the user's posts array 
+                await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { posts: post._id }}
+                );
+
+                return post;
+            }
+            throw AuthenticationError
+        },
+
+        addComment: async (parent, { postId, commentInput }, context) => {
+            if (context.user) {
+                // Create the comment document
+                const comment = await Comment.create({
+                    commentInput
+                });
+
+                // Update the user's comment array 
+                await User.findOneAndUpdate(
+                    { _id: context.user._id},
+                    { $addToSet: { comments: comment._id }}
+                );
+
+                // Update the post's comment array 
+                await Post.findOneAndUpdate(
+                    { _id: postId },
+                    { $addToSet: { comments: comment._id }}
+                );
+
+                return comment;
             }
             throw AuthenticationError;
         }

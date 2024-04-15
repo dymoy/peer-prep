@@ -96,7 +96,7 @@ const typeDefs = gql`
         removeSession(sessionId: ID!): Session
         addPost(postInput: PostInput!): Post
         removePost(_id: ID!): Post
-        addComment(commentInput: CommentInput!): Comment
+        addComment(postId: ID!, commentInput: CommentInput!): Comment
     }
 `;
 
