@@ -15,7 +15,6 @@ const commentSchema = new Schema({
         ref: 'User'
     },
     post_Id: {
-        // TODO: refactor to the post ID string? 
         type: Schema.Types.ObjectId,
         ref: 'Post'
     },

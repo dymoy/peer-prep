@@ -17,50 +17,60 @@ db.once('open', async () => {
         //Bulk create each model
         await User.create(userData);
         await Session.create(sessionData);
-        await Post.create(postData);
+        //await Post.create(postData);
 
-// Step 1: Assign each session to one user's 'session' array
-
+	// Step 1: Assign each session to one user's 'session' array
         // 1a: Assign first session to first user's 'session' array
+        const codeExam = Session.findOne({ title: "How to ace a coding exam"} );
+
         User.findOneAndUpdate(
           {"username": "joesmith123"},
-          {$push: {sessions: "How to ace a coding exam"}}
+          {$push: {sessions: codeExam._id}}
         )
 
         // 1b: Assign second session to second user's 'session' array
+        const mernStack = Session.findOne({ title: "MERN Stack Essentials" });
+
         User.findOneAndUpdate(
           {"username": "bobjones45"},
-          {$push: {sessions: "MERN Stack Essentials"}}
+          {$push: {sessions: mernStack._id}}
         )
 
         // 1c: Assign third session to third user's 'session' array
+        const noSql = Session.findOne({ title: "No thanks NoSQL"});
+
         User.findOneAndUpdate(
           {"username": "taylorswift"},
-          {$push: {sessions: "No thanks NoSQL"}}
+          {$push: {sessions: noSql._id}}
         )
 
-// Step 2: Assign a user to each session's 'host' property (inverse of step 1)
+	// Step 2: Assign a user to each session's 'host' property (inverse of step 1)
 
         // 2a: Assign related user to first session's 'host' property
+        const joeUser = User.findOne({ username: "joesmith123"});
+
         Session.findOneAndUpdate(
           {"title:": "How to ace a coding exam"},
-          {$push: {host: "joesmith123"}}
+          {$push: {host: joeUser._id }}
         )
 
         // 2b: Assign related user to second session's 'host' property
+        const bobUser = User.findOne({ username: "bobjones45" });
+
         Session.findOneAndUpdate(
           {"title:": "MERN Stack Essentials"},
-          {$push: {host: "bobjones45"}}
+          {$push: {host: bobUser._id }}
         )
 
         // 3c: Assign related user to third session's 'host' property
+        const taylorUser = User.findOne({ username: "taylorswift" });
         Session.findOneAndUpdate(
           {"title:": "No thanks NoSQL"},
-          {$push: {host: "taylorswift"}}
+          {$push: {host: taylorUser._id }}
         )
       
 
-// Step 3: Assign each post to one user's 'posts' array
+	/** Step 3: Assign each post to one user's 'posts' array - NOT MVP
 
         // 3a: Assign first post to first user's 'posts' array
         User.findOneAndUpdate(
@@ -85,8 +95,9 @@ db.once('open', async () => {
           {"username": "georgejungle"},
           {$push: {posts: "JQuery Help"}}
         )
+	*/
 
-// Step 4: Assign a user to each post's 'author' property (inverse of step 3)
+	/** Step 4: Assign a user to each post's 'author' property (inverse of step 3) - NOT MVP
 
         // 4a: Assign related user to first session's 'host' property
         Post.findOneAndUpdate(
@@ -111,17 +122,13 @@ db.once('open', async () => {
           {"title": "JQuery Help"},
           {$push: {author: "georgejungle"}}
         )
-        
-    } catch (err) {
-      console.error(err);
-      process.exit(1);
+	*/
+    
+  	} catch (err) {
+        console.error(err);
+        process.exit(1);
     }
 
     console.log('all done!');
-  process.exit(0);
+    process.exit(0);
 });
-
-
-
-
-

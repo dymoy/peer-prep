@@ -58,8 +58,8 @@ const typeDefs = gql`
         start_date: String
         end_date: String
         link: String
-        host: User
-        attendees: [User]
+        host: ID
+        attendees: [String]
     }
     
     input PostInput {
@@ -67,25 +67,25 @@ const typeDefs = gql`
         title: String
         content: String
         topics: String
-        author: User
+        author: ID
         created_At: String
         solved: Boolean
-        comments: [Comment]
+        comments: [ID]
     }
     
     input CommentInput {
         _id: ID!
         content: String
         created_At: String
-        user: User
-        post: Post
+        user: ID
+        post: ID
     }
     
     type Query { 
         me: User
-        sessions(username: String!): [Session]
-        posts(username: String!): [Post]
-        comments(_id: ID!): [Comment]
+        allSessions: [Session]
+        mySessions(username: String!): [Session]
+        singleSession(sesionId: ID!): Session
     }
 
     type Mutation {
