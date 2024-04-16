@@ -17,27 +17,20 @@ const resolvers = {
             throw AuthenticationError;
         },
 
-        // Get user object by username and populate the sessions for the user
-        user: async (parent, { username }) => {
-            return User.findOne({ username }).populate('sessions');
+        // Get all sessions from the database 
+        allSessions: async (parent, args) => {
+            return Session.find().sort({ start_date: -1 });
         },
 
         // Get the sessions for the user by username
-        sessions: async(parent, { username }) => {
+        mySessions: async(parent, { username }) => {
             const params = username ? { username } : {};
             return Session.find(params).sort({start_date: -1});
         },
 
-        // Get the posts for the user by username
-        posts: async(parent, { username }) => {
-            const params = username ? { username } : {};
-            return Post.find(params).sort({created_At: -1});
-        },
-
-        // Get the comments for a post by ID 
-        comments: async(parent, { post_Id }) => {
-            const params = post_Id ? { post_Id } : {};
-            return Comment.find(params).sort({created_At: -1});
+        // Get a single session by sessionId
+        singleSession: async(parent, { sessionId }) => {
+            return Session.findOne({ _id: sessionId });
         }
     }, 
 

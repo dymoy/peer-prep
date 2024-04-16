@@ -1,4 +1,4 @@
-import './App.cs'
+import './App.css'
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Navigation from './componenets/Navigation';

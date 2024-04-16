@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
+const sessionSchema = require('./Session');
+
 const userSchema = new Schema({
   username: {
     type: String,
@@ -21,15 +23,13 @@ const userSchema = new Schema({
   },
   sessions: [
     {
-      // Reference the session name, NOT the ID
-      type: String,
+      type: Schema.Types.ObjectId,
       ref: 'Session'
     }
   ],
   posts: [
     {
-      // Reference the user name, NOT the ID
-      type: String,
+      type: Schema.Types.ObjectId,
       ref: 'Post'
     }
   ],
