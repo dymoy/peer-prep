@@ -1,18 +1,14 @@
-import './App.css'
+import './App.cs'
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from './pages/Header';
-import Navigation from './pages/Navigation';
-import Footer from './pages/Footer';
+import Navigation from './componenets/Navigation';
 
 function App() {
  return (
 
   <div>
-    <Header />
       <Navigation />
       <Outlet />
-      <Footer />  
       </div>
   );
 }

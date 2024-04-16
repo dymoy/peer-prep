@@ -2,7 +2,6 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import Home from './pages/Home';
-import Login from './pages/Login';
 
 const router = createBrowserRouter([
   {
@@ -14,8 +13,12 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'login',
-        element: <Login />,
+        path: 'sessions',
+        element: <Sessions />,
+      },
+      {
+        path: 'savedsessions',
+        element: <SavedSessions />,
       },
     ],
   },
