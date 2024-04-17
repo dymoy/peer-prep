@@ -6,17 +6,9 @@ import Auth from '../utils/auth';
 
 const Login = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
-  const [validated] = useState(false);
+  const [validated, setValidated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-
-  const [login, {error, data}] = useMutation(LOGIN_USER);
-  // useEffect(() => {
-  //   if (error) {
-  //     setShowAlert(true)
-  //   } else {
-  //     setShowAlert(false)
-  //   }
-  // },[error])
+  const [login, { error }] = useMutation(LOGIN_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -25,27 +17,20 @@ const Login = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
+    } else {
+      try {
+        const { data } = await login({ variables: { ...userFormData } });
+        Auth.login(data.login.token);
+      } catch (err) {
+        console.error(err);
+        setShowAlert(true);
+      }
     }
-
-    try {
-      const { data } = await login({ variables: {...userFormData },});
-
-      console.log(data);
-      Auth.login(data.login.token);
-    } catch (err) {
-      console.error(err);
-    }
+    setValidated(true);
   };
-
-  setUserFormData({
-    email: '',
-    password: '',
-  });
 
   return (
     <>
@@ -56,7 +41,7 @@ const Login = () => {
         <Form.Group className='mb-3'>
           <Form.Label htmlFor='email'>Email</Form.Label>
           <Form.Control
-            type='text'
+            type='email'
             placeholder='Your email'
             name='email'
             onChange={handleInputChange}
