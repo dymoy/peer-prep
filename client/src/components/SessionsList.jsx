@@ -15,7 +15,7 @@ const SessionList = ({ sessions, title }) => {
                 Unit: {session.unit}
               </div>
               <div style={{ fontSize: '1rem' }}>
-                Hosted By: User {session.host._id}
+                Hosted By: User {session.host.username}
               </div>
               <div style={{ fontSize: '1rem' }}>
                 Date: {session.start_date}

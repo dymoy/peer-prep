@@ -2,10 +2,11 @@ import { useQuery } from '@apollo/client';
 import SessionList from "../components/SessionsList";
 import { QUERY_ALL_SESSIONS } from '../utils/queries';
 
-const Home = () => {
+const ExploreSessions = () => {
   const { loading, data } = useQuery(QUERY_ALL_SESSIONS);
   const allSessions = data?.allSessions || [];
   console.log(data);
+
   return (
     <main>
       <div className="flex-row justify-center">
@@ -31,9 +32,8 @@ const Home = () => {
           )}
         
       </div>
-
     </main>
   );
 };
 
-export default Home;
+export default ExploreSessions;

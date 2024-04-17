@@ -1,7 +1,9 @@
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
-import Home from './pages/Home';
+import ExploreSessions from './pages/ExploreSessions';
+import MySessions from './pages/MySessions';
+import AddSession from './pages/AddSession';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const router = createBrowserRouter([
@@ -11,12 +13,16 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <ExploreSessions />,
       },
-      // {
-      //   path: 'savedsessions',
-      //   element: <SavedSessions />,
-      // },
+      {
+        path: 'mysessions',
+        element: <MySessions />,
+      },
+      {
+        path: 'addsession',
+        element: <AddSession />
+      }
     ],
   },
 ]);
