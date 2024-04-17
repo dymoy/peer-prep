@@ -16,22 +16,70 @@ export const QUERY_ME = gql`
             _id
             username
             email
-            sessions {
-                title
-                description
-                unit
-                start_date
-                end_date
-                link
-                host
-                attendees {
-                    username
-                }
-            }
+            sessions 
+            posts
+            comments
         }
     }
 `;
 
-// TODO: Add posts and comments to query_me? 
+export const QUERY_ALL_SESSIONS = gql`
+    query allSessions {
+        allSessions {
+            _id
+            title
+            description
+            unit
+            start_date
+            end_date
+            host {
+                username
+            }
+            attendees {
+                _id
+                username
+            }
+            link
+        }
+    }
+`;
 
-// TODO: Add other queries
+export const QUERY_MY_SESSIONS = gql`
+    query mySessions($username: String!) {
+        mySessions(username: $username) {
+            _id
+            title
+            description
+            unit
+            start_date
+            end_date
+            host {
+                username
+            }
+            attendees {
+                username
+            }
+            link
+        }
+    }
+`;
+
+export const QUERY_SINGLE_SESSION = gql`
+    query SingleSession($sesionId: ID!) {
+        singleSession(sesionId: $sesionId) {
+            _id
+            title
+            description
+            unit
+            start_date
+            end_date
+            host {
+                username
+            }
+            attendees {
+                username
+            }
+            link
+        }
+    }
+`;

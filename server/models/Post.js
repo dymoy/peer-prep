@@ -14,8 +14,7 @@ const postSchema = new Schema({
         type: String
     },
     author: {
-        // TODO: Reference the user name, NOT the ID
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: 'User'
     },
     created_at: { 
