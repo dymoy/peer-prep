@@ -9,7 +9,14 @@ const SignUp = () => {
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
-  const [addUser] = useMutation(ADD_USER);
+  const [addUser, {error, data}] = useMutation(ADD_USER);
+  // useEffect(() => {
+  //   if (error) {
+  //     setShowAlert(true)
+  //   } else {
+  //     setShowAlert(false)
+  //   }
+  // },[error])
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -26,13 +33,12 @@ const SignUp = () => {
     }
 
     try {
-      const { data } = await addUser({ variables: userFormData });
+      const { data } = await addUser({ variables: {...userFormData },});
 
       console.log(data);
       Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);
-      setShowAlert(true);
     }
   };
 
