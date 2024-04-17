@@ -24,25 +24,26 @@ export const QUERY_ME = gql`
 `;
 
 export const QUERY_ALL_SESSIONS = gql`
-    query allSessions {
+    query AllSessions {
         allSessions {
+        _id
+        title
+        description
+        unit
+        start_date
+        end_date
+        link
+        host {
             _id
-            title
-            description
-            unit
-            start_date
-            end_date
-            host {
-                username
-            }
-            attendees {
-                _id
-                username
-            }
-            link
+        }
+        attendees {
+            _id
+        }
         }
     }
 `;
+
+
 
 export const QUERY_MY_SESSIONS = gql`
     query mySessions($username: String!) {

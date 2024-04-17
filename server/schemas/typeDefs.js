@@ -51,6 +51,7 @@ const typeDefs = gql`
     }
 
     input SessionInput {
+        _id: ID!
         title: String
         description: String
         unit: String

@@ -5,7 +5,7 @@ import { QUERY_ALL_SESSIONS } from '../utils/queries';
 const Home = () => {
   const { loading, data } = useQuery(QUERY_ALL_SESSIONS);
   const allSessions = data?.allSessions || [];
-
+  console.log(data);
   return (
     <main>
       <div className="flex-row justify-center">
@@ -23,9 +23,10 @@ const Home = () => {
         {loading ? (
             <div>Loading...</div>
           ) : (
+        
             <SessionList
-              sessions={allSessions}
-              title="Upcoming Sessions"
+              sessions={data.allSessions}
+              title="Study Session"
             />
           )}
         
