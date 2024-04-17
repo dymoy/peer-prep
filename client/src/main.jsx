@@ -13,10 +13,6 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       // {
-      //   path: 'sessions',
-      //   element: <Sessions />,
-      // },
-      // {
       //   path: 'savedsessions',
       //   element: <SavedSessions />,
       // },

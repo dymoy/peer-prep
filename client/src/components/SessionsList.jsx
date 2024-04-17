@@ -12,13 +12,13 @@ const SessionList = ({ sessions, title }) => {
         sessions.map((session) => (
           <div key={session._id} className="card mb-3">
             <h4 className="card-header bg-primary text-light p-2 m-0">
-              {session.sessionHost} <br />
+              {session.host} <br />
               <span style={{ fontSize: '1rem' }}>
                 is hosting this session on {session.start_date}
               </span>
             </h4>
             <div className="card-body bg-light p-2">
-              <p>{session.sessionText}</p>
+              <p>{session.description}</p>
             </div>
             {/* Create a link to this session's page to view its comments using `<Link>` component */}
             <Link
