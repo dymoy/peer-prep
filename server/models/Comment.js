@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-
+const {formatDate} = require('../utils/formatDate');
 const commentSchema = new Schema({
     content: {
         type: String,
@@ -8,7 +8,8 @@ const commentSchema = new Schema({
     created_At: {
         type: Date,
         default: Date.now,
-        get: (created_At) => formatDate(created_At),
+        get: (timestamp) => formatDate(timestamp)
+        
     }, 
     user: { 
         type: Schema.Types.ObjectId,

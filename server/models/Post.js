@@ -20,7 +20,7 @@ const postSchema = new Schema({
     created_at: { 
         type: Date,
         default: Date.now,
-        get: (timestamp) => dateFormat(timestamp)
+        get: (timestamp) => dateFormat(timestamp) 
     }, 
     solved: { 
         type: Boolean,
