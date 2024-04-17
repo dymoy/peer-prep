@@ -14,6 +14,7 @@ const Navigation = () => {
       <>
         <Navbar bg="dark" variant="dark" expand="lg">
           <Container fluid>
+          <Navbar.Toggle aria-controls='navbar' />
             <Navbar.Collapse id="navbar" className="d-flex flex-row-reverse">
               <Nav className="ml-auto d-flex">
               <Nav.Link as={Link} to='/sessions'>

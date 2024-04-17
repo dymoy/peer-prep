@@ -9,7 +9,14 @@ const Login = () => {
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
-  const [login] = useMutation(LOGIN_USER);
+  const [login, {error, data}] = useMutation(LOGIN_USER);
+  // useEffect(() => {
+  //   if (error) {
+  //     setShowAlert(true)
+  //   } else {
+  //     setShowAlert(false)
+  //   }
+  // },[error])
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -26,18 +33,16 @@ const Login = () => {
     }
 
     try {
-      const { data } = await login({ variables: userFormData });
+      const { data } = await login({ variables: {...userFormData },});
 
       console.log(data);
       Auth.login(data.login.token);
     } catch (err) {
       console.error(err);
-      setShowAlert(true);
     }
   };
 
   setUserFormData({
-    username: '',
     email: '',
     password: '',
   });
@@ -46,12 +51,12 @@ const Login = () => {
     <>
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-          {'Something went wrong with your login credentials!'}
+          Something went wrong with your login credentials!
         </Alert>
         <Form.Group className='mb-3'>
           <Form.Label htmlFor='email'>Email</Form.Label>
           <Form.Control
-            type='email'
+            type='text'
             placeholder='Your email'
             name='email'
             onChange={handleInputChange}
