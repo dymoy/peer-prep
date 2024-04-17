@@ -6,10 +6,9 @@ import Auth from '../utils/auth';
 
 const SignUp = () => {
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
-  const [validated] = useState(false);
+  const [validated, setValidated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-
-  const [addUser] = useMutation(ADD_USER);
+  const [addUser, { error }] = useMutation(ADD_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -18,29 +17,20 @@ const SignUp = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
+    } else {
+      try {
+        const { data } = await addUser({ variables: { ...userFormData } });
+        Auth.login(data.addUser.token);
+      } catch (err) {
+        console.error(err);
+        setShowAlert(true);
+      }
     }
-
-    try {
-      const { data } = await addUser({ variables: userFormData });
-
-      console.log(data);
-      Auth.login(data.addUser.token);
-    } catch (err) {
-      console.error(err);
-      setShowAlert(true);
-    }
+    setValidated(true);
   };
-
-  setUserFormData({
-    username: '',
-    email: '',
-    password: '',
-  });
 
   return (
     <>
