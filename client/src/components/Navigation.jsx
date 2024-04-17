@@ -18,7 +18,7 @@ const Navigation = () => {
             <Navbar.Collapse id="navbar" className="d-flex flex-row-reverse">
               <Nav className="ml-auto d-flex">
               <Nav.Link as={Link} to='/sessions'>
-                Sessions
+                Explore Sessions
               </Nav.Link>
                 {Auth.loggedIn() ? (
                   <>
@@ -29,7 +29,7 @@ const Navigation = () => {
                   </>
                 ) : (
                   <Nav.Link onClick={() => setShowModal(true)}>
-                    Login/Sign Up
+                    Login or Sign Up
                   </Nav.Link>
                 )}
               </Nav>
