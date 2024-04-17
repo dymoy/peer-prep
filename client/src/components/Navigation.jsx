@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Modal, Tab } from "react-bootstrap";
-import SignUp from "./Signup";
+import SignUp from "./SignUp";
 import Login from "./Login";
 import Auth from "../utils/auth";
 
@@ -10,9 +10,7 @@ const Navigation = () => {
 
   return (
     <nav>
-      <header>
         <h1>Peer Prep</h1>
-      </header>
       <>
         <Navbar bg="dark" variant="dark" expand="lg">
           <Container fluid>
