@@ -44,39 +44,39 @@ export const ADD_USER = gql`
  * Executes the addSession mutation 
  * Returns a Session
  */
-export const ADD_SESSION = gql`
-    mutation addSession($sessionInput: SessionInput!) {
-        addSession(sessionInput: $sessionInput) {
-            _id: ID!
-            title: String
-            description: String
-            unit: String
-            start_date: String
-            end_date: String
-            link: String
-            host: User
-            attendees: [User]
-        }
-    }
-`;
+// export const ADD_SESSION = gql`
+//     mutation addSession($sessionInput: SessionInput!) {
+//         addSession(sessionInput: $sessionInput) {
+//             _id: ID!
+//             title: String
+//             description: String
+//             unit: String
+//             start_date: String
+//             end_date: String
+//             link: String
+//             host: User
+//             attendees: [User]
+//         }
+//     }
+// `;
 
-/**
- * @mutation REMOVE_SESSION
- * Executes the removeSession mutation 
- * Returns a Session 
- */
-export const REMOVE_SESSION = gql`
-    mutation removeSession($sessionId: ID!) {
-        removeSession(sessionId: $sessionId) {
-            _id: ID!
-            title: String
-            description: String
-            unit: String
-            start_date: String
-            end_date: String
-            link: String
-            host: User
-            attendees: [User]
-        }
-    }
-`;
+// /**
+//  * @mutation REMOVE_SESSION
+//  * Executes the removeSession mutation 
+//  * Returns a Session 
+//  */
+// export const REMOVE_SESSION = gql`
+//     mutation removeSession($sessionId: ID!) {
+//         removeSession(sessionId: $sessionId) {
+//             _id: ID!
+//             title: String
+//             description: String
+//             unit: String
+//             start_date: String
+//             end_date: String
+//             link: String
+//             host: User
+//             attendees: [User]
+//         }
+//     }
+// `;
