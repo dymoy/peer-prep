@@ -19,14 +19,7 @@ const SessionList = ({ sessions, title }) => {
             </h4>
             <div className="card-body bg-light p-2">
               <p>{session.description}</p>
-            </div>
-            {/* Create a link to this session's page to view its comments using `<Link>` component */}
-            <Link
-              className="btn btn-primary btn-block btn-squared"
-              to={`/sessions/${session._id}`}
-            >
-              Join the discussion on this session.
-            </Link>
+            </div>        
           </div>
         ))}
     </div>
