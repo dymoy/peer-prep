@@ -1,16 +1,16 @@
-import './App.css'
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Navigation from './components/Navigation';
-import Home from './pages/Home';
+import "./App.css";
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Navigation from "./components/Navigation";
+import Home from "./pages/Home";
 
 function App() {
- return (
-
-  <div>
+  return (
+    <div>
+      <Home />
       <Navigation />
       <Outlet />
-      </div>
+    </div>
   );
 }
 
