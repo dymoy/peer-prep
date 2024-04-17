@@ -12,14 +12,14 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-      {
-        path: 'sessions',
-        element: <Sessions />,
-      },
-      {
-        path: 'savedsessions',
-        element: <SavedSessions />,
-      },
+      // {
+      //   path: 'sessions',
+      //   element: <Sessions />,
+      // },
+      // {
+      //   path: 'savedsessions',
+      //   element: <SavedSessions />,
+      // },
     ],
   },
 ]);

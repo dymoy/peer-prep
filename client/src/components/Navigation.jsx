@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Modal, Tab } from "react-bootstrap";
-import SignUp from "./SignUp";
+import SignUp from "./Signup";
 import Login from "./Login";
 import Auth from "../utils/auth";
 
 const Navigation = () => {
-  // set modal display state
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -22,7 +21,6 @@ const Navigation = () => {
               <Nav.Link as={Link} to='/sessions'>
                 Sessions
               </Nav.Link>
-                {/* if user is logged in show saved books and logout */}
                 {Auth.loggedIn() ? (
                   <>
                     <Nav.Link as={Link} to="/savedsessions">
@@ -39,14 +37,12 @@ const Navigation = () => {
             </Navbar.Collapse>
           </Container>
         </Navbar>
-        {/* set modal data up */}
         <Modal
           size="lg"
           show={showModal}
           onHide={() => setShowModal(false)}
           aria-labelledby="signup-modal"
         >
-          {/* tab container to do either signup or login component */}
           <Tab.Container defaultActiveKey="login">
             <Modal.Header closeButton>
               <Modal.Title id="signup-modal">
