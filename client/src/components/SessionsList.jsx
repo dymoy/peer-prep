@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 const SessionList = ({ sessions, title }) => {
   if (!sessions.length) {
     return <h3>No sessions Yet</h3>;

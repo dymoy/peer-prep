@@ -19,14 +19,11 @@ const sessionSchema = new Schema({
         type: Date,
         required: true,
         get: (timestamp) => formatDate(timestamp)
-
     },
-    
     end_date: {
         type: Date,
         required: true,
         get: (timestamp) => formatDate(timestamp)
-
     },
     link: {
         type: String, 
@@ -34,7 +31,7 @@ const sessionSchema = new Schema({
     },
     host: {
         // Reference the host name, NOT the ID
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: 'User',
     },
     attendees: [

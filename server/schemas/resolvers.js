@@ -71,10 +71,11 @@ const resolvers = {
 
         addSession: async (parent, { sessionInput }, context) => {
             // Check that the user is authenticated
+            console.log(sessionInput);
             if (context.user) {
                 // Create the session document
                 const session = await Session.create({
-                    sessionInput
+                    ...sessionInput
                 });
 
                 // Update the user's sessions array 
