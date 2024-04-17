@@ -1,10 +1,10 @@
-import React from "react";
+import { useQuery } from '@apollo/client';
 import SessionList from "../components/SessionsList";
 import { QUERY_ALL_SESSIONS } from '../utils/queries';
 
 const Home = () => {
   const { loading, data } = useQuery(QUERY_ALL_SESSIONS);
-  const sessions = data?.sessions || [];
+  const allSessions = data?.allSessions || [];
 
   return (
     <main>
@@ -17,16 +17,20 @@ const Home = () => {
         site, please sign up for an account or login.
         </p>
       </div>
+  
       <div className="col-12 col-md-8 mb-3">
+
         {loading ? (
             <div>Loading...</div>
           ) : (
             <SessionList
-              sessions={sessions}
+              sessions={allSessions}
               title="Upcoming Sessions"
             />
           )}
+
       </div>
+
     </main>
   );
 };
