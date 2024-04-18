@@ -79,7 +79,7 @@ const SessionForm = () => {
         }
     }
 
-    // TODO: handleFormSubmit - use mutation to addSession and redirect the user to My Sessions page 
+    // Implement handleFormSubmit that uses addSession mutation and redirects the user to My Sessions page 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 

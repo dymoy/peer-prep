@@ -5,7 +5,6 @@ import { QUERY_ALL_SESSIONS } from '../utils/queries';
 const ExploreSessions = () => {
   const { loading, data } = useQuery(QUERY_ALL_SESSIONS);
   const allSessions = data?.allSessions || [];
-  console.log(data);
 
   return (
     <main>
@@ -24,10 +23,8 @@ const ExploreSessions = () => {
         {loading ? (
             <div>Loading...</div>
           ) : (
-        
             <SessionList
-              sessions={data.allSessions}
-              title="Study Session"
+              sessions={ allSessions }
             />
           )}
         

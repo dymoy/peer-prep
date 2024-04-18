@@ -23,6 +23,17 @@ export const QUERY_ME = gql`
     }
 `;
 
+export const QUERY_USER = gql`
+    query user($userId: ID!) {
+        user(id: $userId) {
+            username
+            sessions {
+                _id
+            }
+        }
+    }
+`;
+
 export const QUERY_ALL_SESSIONS = gql`
     query AllSessions {
         allSessions {

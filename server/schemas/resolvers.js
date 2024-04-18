@@ -17,6 +17,10 @@ const resolvers = {
             throw AuthenticationError;
         },
 
+        user: async (parent, { id }) => {
+            return await User.findOne({ _id: id });
+        },
+
         // Get all sessions from the database 
         allSessions: async (parent, args) => {
             return Session.find().sort({ start_date: -1 });

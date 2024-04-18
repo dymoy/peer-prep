@@ -82,6 +82,7 @@ const typeDefs = gql`
     
     type Query { 
         me: User
+        user(id: ID!): User
         allSessions: [Session]
         mySessions(username: String!): [Session]
         singleSession(sesionId: ID!): Session
