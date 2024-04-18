@@ -1,5 +1,20 @@
-const SessionList = ({ sessions, title }) => {
-  console.log(sessions);
+import { useQuery } from '@apollo/client';
+import { QUERY_USER } from '../utils/queries';
+
+const SessionList = ({ sessions }) => {
+
+  // query user to retrieve username for given ID
+  const getUser = (userId) => {
+    const { loading, data } = useQuery(QUERY_USER, {
+        variables: {
+          userId: userId 
+        }
+    });
+
+    return data?.user.username || '';
+  }
+
+  // If no sessions exist in the database, notify the user 
   if (!sessions.length) {
     return <h3>No sessions Yet</h3>;
   }
@@ -15,7 +30,7 @@ const SessionList = ({ sessions, title }) => {
                 Unit: {session.unit}
               </div>
               <div style={{ fontSize: '1.1rem' }}>
-                Hosted By: User {session.host._id}
+                Hosted By: { getUser(session.host._id) }
               </div>
               <div style={{ fontSize: '1.1rem' }}>
                 Date: {session.start_date}

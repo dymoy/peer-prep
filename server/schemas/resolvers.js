@@ -11,10 +11,14 @@ const resolvers = {
         // Get the user object for the current auth session
         me: async (parent, args, context) => {
             if (context.user) {
-                const user = await User.findOne({ _id: context.user._id});
+                const user = await User.findOne({ _id: context.user._id})
                 return user;
             }
             throw AuthenticationError;
+        },
+
+        user: async (parent, { id }) => {
+            return await User.findOne({ _id: id });
         },
 
         // Get all sessions from the database 
@@ -23,9 +27,16 @@ const resolvers = {
         },
 
         // Get the sessions for the user by username
-        mySessions: async(parent, { username }) => {
-            const params = username ? { username } : {};
-            return Session.find(params).sort({start_date: -1});
+        mySessions: async(parent, args, context) => {
+            const sessions = await Session.find({ 
+                host: context.user._id,
+                start_date: {
+                    $gte: Date.now()
+                }
+            });
+            console.log(sessions);
+            
+            return sessions;
         },
 
         // Get a single session by sessionId
@@ -71,7 +82,7 @@ const resolvers = {
 
         addSession: async (parent, { sessionInput }, context) => {
             // Check that the user is authenticated
-            console.log(sessionInput);
+            console.log("entered addSession resolvers");
             if (context.user) {
                 // Create the session document
                 const session = await Session.create({

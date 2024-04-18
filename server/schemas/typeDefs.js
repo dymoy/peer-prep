@@ -51,7 +51,6 @@ const typeDefs = gql`
     }
 
     input SessionInput {
-        _id: ID!
         title: String
         description: String
         unit: String
@@ -83,8 +82,9 @@ const typeDefs = gql`
     
     type Query { 
         me: User
+        user(id: ID!): User
         allSessions: [Session]
-        mySessions(username: String!): [Session]
+        mySessions: [Session]
         singleSession(sesionId: ID!): Session
     }
 

@@ -2,10 +2,10 @@ import { useQuery } from '@apollo/client';
 import SessionList from "../components/SessionsList";
 import { QUERY_ALL_SESSIONS } from '../utils/queries';
 
-const Home = () => {
+const ExploreSessions = () => {
   const { loading, data } = useQuery(QUERY_ALL_SESSIONS);
   const allSessions = data?.allSessions || [];
-  console.log(data);
+
   return (
     <main>
       <div id="welcome-section">
@@ -24,17 +24,14 @@ const Home = () => {
         {loading ? (
             <div>Loading...</div>
           ) : (
-        
             <SessionList
-              sessions={data.allSessions}
-              title="Study Session"
+              sessions={ allSessions }
             />
           )}
         
       </div>
-
     </main>
   );
 };
 
-export default Home;
+export default ExploreSessions;

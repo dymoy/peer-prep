@@ -25,14 +25,15 @@ const Navigation = () => {
 
           </div>
           <Navbar.Toggle aria-controls='navbar' />
-          <div id="nav-links">
-              <Nav.Link class="nav-link" as={Link} to='/sessions'>
+            <Navbar.Collapse id="navbar" className="d-flex flex-row-reverse">
+              <Nav className="ml-auto d-flex">
+              <Nav.Link as={Link} to='/'>
                 Explore Sessions
               </Nav.Link>
                 {Auth.loggedIn() ? (
                   <>
-                    <Nav.Link class="nav-link" as={Link} to="/savedsessions">
-                      Saved Sessions
+                    <Nav.Link as={Link} to="/mysessions">
+                      My Sessions
                     </Nav.Link>
                     <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                   </>
