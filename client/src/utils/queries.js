@@ -16,9 +16,6 @@ export const QUERY_ME = gql`
             _id
             username
             email
-            sessions 
-            posts
-            comments
         }
     }
 `;
@@ -37,41 +34,39 @@ export const QUERY_USER = gql`
 export const QUERY_ALL_SESSIONS = gql`
     query AllSessions {
         allSessions {
-        _id
-        title
-        description
-        unit
-        start_date
-        end_date
-        link
-        host {
-            _id
-        }
-        attendees {
-            _id
-        }
-        }
-    }
-`;
-
-
-
-export const QUERY_MY_SESSIONS = gql`
-    query mySessions($username: String!) {
-        mySessions(username: $username) {
             _id
             title
             description
             unit
             start_date
             end_date
+            link
             host {
-                username
+                _id
             }
             attendees {
-                username
+                _id
             }
+        }
+    }
+`;
+
+export const QUERY_MY_SESSIONS = gql`
+    query mySessions {
+        mySessions {
+            _id
+            title
+            description
+            unit
+            start_date
+            end_date
             link
+            host {
+                _id
+            }
+            attendees {
+                _id
+            }
         }
     }
 `;

@@ -84,7 +84,7 @@ const typeDefs = gql`
         me: User
         user(id: ID!): User
         allSessions: [Session]
-        mySessions(username: String!): [Session]
+        mySessions: [Session]
         singleSession(sesionId: ID!): Session
     }
 
