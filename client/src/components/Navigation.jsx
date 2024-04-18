@@ -14,7 +14,6 @@ const Navigation = () => {
 
   return (
     <nav>
-        
       <>
         <Navbar id="navigation-bar" expand="lg">
           <div id="icon-title-group">
@@ -27,9 +26,9 @@ const Navigation = () => {
           <Navbar.Toggle aria-controls='navbar' />
             <Navbar.Collapse id="navbar" className="d-flex flex-row-reverse">
               <Nav className="ml-auto d-flex">
-              <Nav.Link as={Link} to='/'>
-                Explore Sessions
-              </Nav.Link>
+                <Nav.Link as={Link} to='/'>
+                  Explore Sessions
+                </Nav.Link>
                 {Auth.loggedIn() ? (
                   <>
                     <Nav.Link as={Link} to="/mysessions">
@@ -41,10 +40,10 @@ const Navigation = () => {
                   <Nav.Link onClick={() => setShowModal(true)}>
                     Login/Sign Up
                   </Nav.Link>
-                )}   
-          </div>      
-
-        </Navbar>
+                )} 
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
         <Modal
           size="lg"
           show={showModal}
