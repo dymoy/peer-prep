@@ -44,21 +44,17 @@ export const ADD_USER = gql`
  * Executes the addSession mutation 
  * Returns a Session
  */
-// export const ADD_SESSION = gql`
-//     mutation addSession($sessionInput: SessionInput!) {
-//         addSession(sessionInput: $sessionInput) {
-//             _id: ID!
-//             title: String
-//             description: String
-//             unit: String
-//             start_date: String
-//             end_date: String
-//             link: String
-//             host: User
-//             attendees: [User]
-//         }
-//     }
-// `;
+export const ADD_SESSION = gql`
+    mutation ADD_SESSION($sessionInput: SessionInput!) {
+            addSession(sessionInput: $sessionInput) {
+            _id
+            title
+            host {
+                _id
+            }
+        }
+    }
+`;
 
 // /**
 //  * @mutation REMOVE_SESSION

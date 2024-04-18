@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
+
+import { ADD_SESSION } from '../utils/mutations';
+import Auth from '../utils/auth';
 
 const SessionForm = () => {
     // Create states to keep track of all form fields to create the Session document
@@ -13,6 +15,8 @@ const SessionForm = () => {
 
     // Create a state for error to notify user when a field value is invalid
     const [error, setError] = useState('');
+
+    const [addSession, { mutationError }] = useMutation(ADD_SESSION);
 
     // Implement handleInputChange to validate the states of each field 
     const handleInputChange = (event) => {
@@ -76,28 +80,42 @@ const SessionForm = () => {
     }
 
     // TODO: handleFormSubmit - use mutation to addSession and redirect the user to My Sessions page 
-    const handleFormSubmit = (event) => {
+    const handleFormSubmit = async (event) => {
         event.preventDefault();
-        
+
         const sessionData = {
             title: title,
             unit: unit,
             description: description,
             start_date: start_date,
             end_date: end_date,
-            link: link
+            link: link,
+            host: Auth.getProfile().data._id,
+            attendees: []
         };
 
-        console.log(sessionData);     
+        try {
+            // useMutation addSession to create the session using sessionData as sessionInput
+            const { data } = await addSession({
+                variables: {
+                    "sessionInput": sessionData,
+                }
+            });
 
-        // Reset states
-        // setTitle('');
-        // setUnit('');
-        // setDescription('');
-        // setStartDate('');
-        // setEndDate('');
-        // setLink('');
-        // setError('');
+            // Reset states
+            setTitle('');
+            setUnit('');
+            setDescription('');
+            setStartDate('');
+            setEndDate('');
+            setLink('');
+            setError('');
+
+            // Redirect the user back to MySessions page
+            window.location = '/mysessions';
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     return (
