@@ -13,21 +13,17 @@ const Navigation = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <nav>
-      <>
-        <Navbar id="navigation-bar" expand="lg">
-          <div id="icon-title-group">
-
-              <img id="icon" src={iconImage}/>
-
-              <h1 id="site-title">Peer Prep</h1>   
-
+    <>
+      <Navbar id="navigation-bar" expand="lg">
+        <div id="icon-title-group">
+            <img id="icon" src={iconImage} alt="Icon" />
+            <h1  id="site-title">Peer Prep</h1>
           </div>
-          <Navbar.Toggle aria-controls='navbar' />
-            <Navbar.Collapse id="navbar" className="d-flex flex-row-reverse">
-              <Nav className="ml-auto d-flex">
-                <Nav.Link as={Link} to='/'>
-                  <strong>Explore Sessions</strong>
+          <Navbar.Toggle aria-controls="navbar" />
+          <Navbar.Collapse id="navbar" className="justify-content-end">
+          <Nav className="ml-auto d-flex">
+            <Nav.Link as={Link} to='/'>
+                  Explore Sessions
                 </Nav.Link>
                 {Auth.loggedIn() ? (
                   <>
@@ -40,43 +36,42 @@ const Navigation = () => {
                   <Nav.Link onClick={() => setShowModal(true)}>
                     Login/Sign Up
                   </Nav.Link>
-                )} 
+              )}
+            </Nav>
+          </Navbar.Collapse>
+      </Navbar>
+      <Modal
+        size="lg"
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        aria-labelledby="signup-modal"
+      >
+        <Tab.Container defaultActiveKey="login">
+          <Modal.Header closeButton>
+            <Modal.Title id="signup-modal">
+              <Nav variant="pills">
+                <Nav.Item>
+                  <Nav.Link eventKey="login">Login</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="signup">Sign Up</Nav.Link>
+                </Nav.Item>
               </Nav>
-            </Navbar.Collapse>
-          </Navbar>
-        <Modal
-          size="lg"
-          show={showModal}
-          onHide={() => setShowModal(false)}
-          aria-labelledby="signup-modal"
-        >
-          <Tab.Container defaultActiveKey="login">
-            <Modal.Header closeButton>
-              <Modal.Title id="signup-modal">
-                <Nav variant="pills">
-                  <Nav.Item>
-                    <Nav.Link eventKey="login">Login</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="signup">Sign Up</Nav.Link>
-                  </Nav.Item>
-                </Nav>
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Tab.Content>
-                <Tab.Pane eventKey="login">
-                  <Login handleModalClose={() => setShowModal(false)} />
-                </Tab.Pane>
-                <Tab.Pane eventKey="signup">
-                  <SignUp handleModalClose={() => setShowModal(false)} />
-                </Tab.Pane>
-              </Tab.Content>
-            </Modal.Body>
-          </Tab.Container>
-        </Modal>
-      </>
-    </nav>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Tab.Content>
+              <Tab.Pane eventKey="login">
+                <Login handleModalClose={() => setShowModal(false)} />
+              </Tab.Pane>
+              <Tab.Pane eventKey="signup">
+                <SignUp handleModalClose={() => setShowModal(false)} />
+              </Tab.Pane>
+            </Tab.Content>
+          </Modal.Body>
+        </Tab.Container>
+      </Modal>
+    </>
   );
 };
 
