@@ -73,9 +73,10 @@ main {
 }
 
 #session-box {
-    width: 900px;
+    width: 90vw;
     padding: 40px;
     align-self: center;
+
 }
 
 #session-box h3 {
@@ -89,6 +90,9 @@ main {
     color: black;
     font-weight: bold;
     line-height: 1.8;
+}
+.card {
+    margin-bottom: 50px;
 }
 
 #session-box-description {
