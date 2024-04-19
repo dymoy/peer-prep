@@ -23,7 +23,7 @@ const resolvers = {
 
         // Get all sessions from the database 
         allSessions: async (parent, args) => {
-            return Session.find().sort({ start_date: -1 });
+            return Session.find().sort({ start_date: 1});
         },
 
         // Get the sessions for the user by username
@@ -33,7 +33,7 @@ const resolvers = {
                 start_date: {
                     $gte: Date.now()
                 }
-            });
+            }).sort({ start_date: 1 });
             console.log(sessions);
             
             return sessions;

@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
+import Auth from '../utils/auth';
 
 const SessionList = ({ sessions }) => {
 
@@ -12,6 +13,13 @@ const SessionList = ({ sessions }) => {
     });
 
     return data?.user.username || '';
+  }
+
+  // Adds the current auth user to the attendees array of the selected Session
+  const registerAttendee = () => {
+    console.log(Auth.getProfile().data);
+    // TODO: Call mutation to addAttendee 
+    return;
   }
 
   // If no sessions exist in the database, notify the user 
@@ -38,7 +46,10 @@ const SessionList = ({ sessions }) => {
             </h4>
             <div className="card-body bg-light p-2" id="session-box-description">
               <p>{session.description}</p>
-            </div>        
+            </div>
+            { Auth.loggedIn() && Auth.getProfile().data.username !== getUser(session.host._id) &&
+              <button className="btn btn-primary btn-block py-3" type="submit" onClick={ registerAttendee }>Register to Session!</button>
+            }
           </div>
         ))}
     </div>
