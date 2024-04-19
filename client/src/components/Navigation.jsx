@@ -37,7 +37,7 @@ const Navigation = () => {
               </>
             ) : (
               <Nav.Link onClick={() => setShowModal(true)}>
-                Login/Sign Up
+                <strong>Login/Sign Up</strong>
               </Nav.Link>
             )}
           </Nav>

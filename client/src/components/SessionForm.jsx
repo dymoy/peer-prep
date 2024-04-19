@@ -119,9 +119,9 @@ const SessionForm = () => {
     }
 
     return (
-        <div>
-            <h4>Let's get to Prepping! </h4>
-            <h5>Enter and submit the details of your session below.</h5>
+        <div id='new-session-main'>
+            <h4>Let's get prepping! </h4>
+            <h5>Enter the details of your session below:</h5>
             
             <form className="flex-row justify-center justify-space-between-md align-center" onSubmit={handleFormSubmit}>
             
@@ -134,6 +134,7 @@ const SessionForm = () => {
                             placeholder="What's the title of your session?" 
                             name="title" 
                             size='100' 
+                            class="input-new-session"
                             onChange={handleInputChange} 
                             onBlur={validateFilled}
                         />
@@ -146,6 +147,7 @@ const SessionForm = () => {
                             placeholder='What unit of the class will you be studying?' 
                             name='unit'
                             size='50' 
+                            class="input-new-session"
                             onChange={handleInputChange} 
                             onBlur={validateFilled}
                         />
@@ -158,23 +160,25 @@ const SessionForm = () => {
                             id="description" 
                             cols="100" rows="10" 
                             placeholder="Enter the details of your session"
+                            class="input-new-session"
                             onChange={handleInputChange}
                             onBlur={validateFilled}
                         />
                     </section>
                     <section className='py-2'>
                         {/* Start Date and Time */}
-                        <label htmlFor="start-date">When is your session starting?</label><br />
+                        <label class="form-label" htmlFor="start-date">When is your session starting?</label><br />
                         <input 
                             required
                             type="datetime-local" 
-                            name="start_date" 
+                            name="start_date"
+                            
                             onChange={handleDateChange}
                         />
                     </section>
                     <section className='py-2'>
                         {/* End Date and Time */}
-                        <label htmlFor="start-date">When is your session ending?</label><br />
+                        <label class="form-label" htmlFor="start-date" >When is your session ending?</label><br />
                         <input 
                             required
                             type="datetime-local" 
@@ -190,6 +194,7 @@ const SessionForm = () => {
                             name="link"
                             placeholder="Enter the meeting link for which you'll be hosting the session" 
                             size='100' 
+                            class="input-new-session"
                             onChange={handleInputChange}/>
                     </section>
                 </div>
@@ -199,7 +204,7 @@ const SessionForm = () => {
                         <p className="error-text">* {error} *</p>
                     </div>
                 )}
-                <button className="btn btn-primary btn-block py-3" type="submit">Create Session!</button>
+                <button className="btn btn-primary" type="submit" style={{ backgroundColor: '#d6d4c7', color: '#9d4836', margin: '40px 40px', fontWeight: 'bold', border: 'none' }}>Create Session!</button>
 
             </form>
         </div>

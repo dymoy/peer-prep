@@ -1,5 +1,9 @@
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
+import dayjs from 'dayjs';
+import CustomParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(CustomParseFormat);
 
 const SessionList = ({ sessions }) => {
 
@@ -12,6 +16,26 @@ const SessionList = ({ sessions }) => {
     });
 
     return data?.user.username || '';
+  }
+
+  // Get duration of meeting using start and end times
+  const getDuration = (startTime, endTime) => {
+    
+    const startDate = dayjs(startTime, 'MMM Do, YYYY [at] h:mm a');
+    const endDate = dayjs(endTime, 'MMM Do, YYYY [at] h:mm a');
+
+    let duration = endDate.diff(startDate, 'hour', true).toPrecision(3);
+    let remainder = duration.split('.')[1];
+    console.log(remainder.charAt(0));
+
+    if (remainder.charAt(0) === '0' && remainder.charAt(1) === '0') {
+      duration = duration.split('.')[0];
+    } 
+    if (duration === 1) {
+      return `${duration} hour`;
+    } else {
+      return `${duration} hours`;
+    }
   }
 
   // If no sessions exist in the database, notify the user 
@@ -36,7 +60,7 @@ const SessionList = ({ sessions }) => {
                 Starts: {session.start_date}
               </div>
               <div style={{ fontSize: '1.0rem' }}>
-                Ends: {session.end_date}
+                Duration: { getDuration(session.start_date, session.end_date) }
               </div>
               <div style={{ fontSize: '1.0rem' }}>
                 Session Link: {session.link}
