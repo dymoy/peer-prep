@@ -28,9 +28,9 @@ const Navigation = () => {
                 {Auth.loggedIn() ? (
                   <>
                     <Nav.Link as={Link} to="/mysessions">
-                      My Sessions
+                    <strong>My Sessions</strong>
                     </Nav.Link>
-                    <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+                    <Nav.Link onClick={Auth.logout}><strong>Logout</strong></Nav.Link>
                   </>
                 ) : (
                   <Nav.Link onClick={() => setShowModal(true)}>

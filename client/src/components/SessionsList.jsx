@@ -16,27 +16,33 @@ const SessionList = ({ sessions }) => {
 
   // If no sessions exist in the database, notify the user 
   if (!sessions.length) {
-    return <h3>No sessions Yet</h3>;
+    return <h3 class="no-sessions">No sessions Yet</h3>;
   }
 
   return (
     <div id="session-box">
       {sessions &&
         sessions.map((session) => (
-          <div key={session._id} className="card mb-3">
+          <div key={session._id} className="card">
             <h3>{session.title}</h3>
-            <h4 className="card-header p-2 m-0"  id="session-box-subheader">
+            <h4 className="card-header" id="session-box-subheader">
               <div style={{ fontSize: '1.1rem' }}>
-                Unit: {session.unit}
+                <strong>Unit: {session.unit}</strong>
               </div>
-              <div style={{ fontSize: '1.1rem' }}>
-                Hosted By: { getUser(session.host._id) }
+              <div style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>
+                <strong>Hosted By: { getUser(session.host._id) }</strong>
               </div>
-              <div style={{ fontSize: '1.1rem' }}>
-                Date: {session.start_date}
+              <div style={{ fontSize: '1.0rem' }}>
+                Starts: {session.start_date}
+              </div>
+              <div style={{ fontSize: '1.0rem' }}>
+                Ends: {session.end_date}
+              </div>
+              <div style={{ fontSize: '1.0rem' }}>
+                Session Link: {session.link}
               </div>
             </h4>
-            <div className="card-body bg-light p-2" id="session-box-description">
+            <div className="card-body bg-light" id="session-box-description">
               <p>{session.description}</p>
             </div>        
           </div>
