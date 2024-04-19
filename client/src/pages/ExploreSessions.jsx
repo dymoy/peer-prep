@@ -19,7 +19,7 @@ const ExploreSessions = () => {
         </p>
       </div>
   
-      <div id="sessions-list" className="col-12 col-md-8 mb-3">
+      <div id="sessions-list">
       
         {loading ? (
             <div>Loading...</div>

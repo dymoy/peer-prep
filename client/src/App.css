@@ -69,7 +69,7 @@ main {
 
 #session-box {
     width: 900px;
-    padding-left: 40px;
+    padding: 40px;
     align-self: center;
 }
 
