@@ -8,9 +8,9 @@ const MySessions = () => {
     const mySessions = data?.mySessions || [];
 
     return (
-        <div className="col-12 col-md-8 mb-3">
+        <main>
             {/* Give user a button option to create a session */}
-            <Link to="/addsession" className="btn btn-primary">+ Add Session</Link>
+            <Link to="/addsession" className="btn btn-primary" style={{ backgroundColor: '#d6d4c7', color: '#9d4836', margin: '40px 40px', fontWeight: 'bold' }}>+ Add Session</Link>
 
             {/* Load the user's saved sessions */}
             {loading 
@@ -21,7 +21,7 @@ const MySessions = () => {
                     />
                 )
             }
-        </div>
+        </main>
     );
 };
 

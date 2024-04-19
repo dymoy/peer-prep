@@ -16,7 +16,7 @@ const SessionList = ({ sessions }) => {
 
   // If no sessions exist in the database, notify the user 
   if (!sessions.length) {
-    return <h3>No sessions Yet</h3>;
+    return <h3 class="no-sessions">No sessions Yet</h3>;
   }
 
   return (
