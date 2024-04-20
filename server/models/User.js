@@ -27,18 +27,6 @@ const userSchema = new Schema({
       ref: 'Session'
     }
   ],
-  posts: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Post'
-    }
-  ],
-  comments: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Comment'
-    }
-  ],
 });
 
 /* Hash entered password before entering it into the db */
