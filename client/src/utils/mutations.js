@@ -56,6 +56,21 @@ export const ADD_SESSION = gql`
     }
 `;
 
+export const ADD_ATTENDEE = gql`
+    mutation Mutation($sessionId: ID!) {
+            addAttendee(sessionId: $sessionId) {
+            _id
+            title
+            host {
+                username
+            }
+            attendees {
+                username
+            }
+        }
+    }
+`;
+
 // /**
 //  * @mutation REMOVE_SESSION
 //  * Executes the removeSession mutation 

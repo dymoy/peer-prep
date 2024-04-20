@@ -1,11 +1,14 @@
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
+import { ADD_ATTENDEE } from '../utils/mutations';
+import Auth from '../utils/auth';
+
 import dayjs from 'dayjs';
 import CustomParseFormat from 'dayjs/plugin/customParseFormat';
-
 dayjs.extend(CustomParseFormat);
 
 const SessionList = ({ sessions }) => {
+  const [addAttendee, { error }] = useMutation(ADD_ATTENDEE);
 
   // query user to retrieve username for given ID
   const getUser = (userId) => {
@@ -18,6 +21,20 @@ const SessionList = ({ sessions }) => {
     return data?.user.username || '';
   }
 
+  // Adds the current auth user to the attendees array of the selected Session
+  const handleAddAttendee = async (sessionId) => {
+    console.log('Registering attendee..');
+    console.log(sessionId);
+    // const { data } = await addAttendee({
+    //   variables: { sessionId: sessionId }
+    // });
+
+    console.log(data);
+    
+    // TODO: Call mutation to addAttendee 
+    return;
+  }
+  
   // Get duration of meeting using start and end times
   const getDuration = (startTime, endTime) => {
     
@@ -68,7 +85,10 @@ const SessionList = ({ sessions }) => {
             </h4>
             <div className="card-body bg-light" id="session-box-description">
               <p>{session.description}</p>
-            </div>        
+            </div>
+            { Auth.loggedIn() && Auth.getProfile().data.username !== getUser(session.host._id) &&
+              <button className="btn btn-primary btn-block py-3" type="submit" onClick={ handleAddAttendee(session._id) }>Register to Session!</button>
+            }
           </div>
         ))}
     </div>
