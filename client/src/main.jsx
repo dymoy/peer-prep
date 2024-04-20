@@ -4,6 +4,7 @@ import App from './App';
 import ExploreSessions from './pages/ExploreSessions';
 import MySessions from './pages/MySessions';
 import AddSession from './pages/AddSession';
+import UpdateSession from './pages/UpdateSession';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const router = createBrowserRouter([
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: 'addsession',
         element: <AddSession />
+      },
+      {
+        path: 'updatesession',
+        element: <UpdateSession/>
       }
     ],
   },
