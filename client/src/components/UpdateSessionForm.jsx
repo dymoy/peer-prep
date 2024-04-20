@@ -1,37 +1,15 @@
 import { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_SINGLE_SESSION } from '../utils/queries';
-import dayjs from 'dayjs';
-
-
 import Auth from '../utils/auth';
 
-const UpdateSessionForm = ({sessionId}) => {
-
-    const { loading, data } = useQuery(QUERY_SINGLE_SESSION, {
-        variables: {
-            sessionId: sessionId
-        }
-    });
-
-    const session = data?.singleSession || {};
-
-    console.log(session.start_date);
-    console.log(session.end_date);
-
-    const startDate = new Date(parseInt(session.start_date));
-    const startVal = dayjs(startDate).format('YYYY-MM-DDTHH:mm');
-    
-    const endDate = new Date(parseInt(session.end_date));
-    const endVal = dayjs(endDate).format('YYYY-MM-DDTHH:mm');
-    console.log(endVal);
+const UpdateSessionForm = ({session}) => {
 
     // Create states to keep track of all form fields to create the Session document
     const [title, setTitle] = useState(session.title);
     const [unit, setUnit] = useState(session.unit);
     const [description, setDescription] = useState(session.description);
-    const [start_date, setStartDate] = useState(startVal || '');
-    const [end_date, setEndDate] = useState(endVal || '');
+    const [start_date, setStartDate] = useState(session.start_date);
+    const [end_date, setEndDate] = useState(session.end_date);
     const [link, setLink] = useState(session.link);
 
     // Create a state for error to notify user when a field value is invalid
@@ -111,6 +89,8 @@ const UpdateSessionForm = ({sessionId}) => {
             link: link,
         };
 
+        console.log(sessionData);
+
         try {
             // useMutation updateSession to update the session using sessionData as sessionInput
             
@@ -131,7 +111,6 @@ const UpdateSessionForm = ({sessionId}) => {
         }
     }
 
-    // return;
     return (
         <div id='update-session-main'>
             <h5>Update Session Details</h5>
