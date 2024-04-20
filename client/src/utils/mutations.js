@@ -45,7 +45,7 @@ export const ADD_USER = gql`
  * Returns a Session
  */
 export const ADD_SESSION = gql`
-    mutation ADD_SESSION($sessionInput: SessionInput!) {
+    mutation addSession($sessionInput: SessionInput!) {
             addSession(sessionInput: $sessionInput) {
             _id
             title
@@ -57,13 +57,32 @@ export const ADD_SESSION = gql`
 `;
 
 export const UPDATE_SESSION = gql`
-    mutation UPDATE_SESSION($sessionInput: SessionInput!) {
+    mutation updateSession($sessionInput: SessionInput!) {
         updateSession(sessionInput: $sessionInput) {
             _id
             title
             host {
                 _id
             }
+        }
+    }
+`;
+
+export const DELETE_SESSION = gql`
+    mutation deleteSession($sessionId: ID!) {
+        deleteSession(sessionId: $sessionId) {
+            title
+            description
+            unit
+            start_date
+            end_date
+            host {
+                _id
+            }
+            attendees {
+                _id
+            }
+            link
         }
     }
 `;
@@ -96,23 +115,3 @@ export const REMOVE_ATTENDEE = gql`
     }
 `;
 
-// /**
-//  * @mutation REMOVE_SESSION
-//  * Executes the removeSession mutation 
-//  * Returns a Session 
-//  */
-// export const REMOVE_SESSION = gql`
-//     mutation removeSession($sessionId: ID!) {
-//         removeSession(sessionId: $sessionId) {
-//             _id: ID!
-//             title: String
-//             description: String
-//             unit: String
-//             start_date: String
-//             end_date: String
-//             link: String
-//             host: User
-//             attendees: [User]
-//         }
-//     }
-// `;

@@ -4,8 +4,10 @@ import { QUERY_ALL_SESSIONS, QUERY_MY_SESSIONS } from '../utils/queries';
 import { Link } from 'react-router-dom';
 
 const MySessions = () => {
-    const {loading, data } = useQuery(QUERY_MY_SESSIONS);
+    const { loading, data } = useQuery(QUERY_MY_SESSIONS);
     const mySessions = data?.mySessions || [];
+
+    if (loading) return null;
 
     return (
         <main>

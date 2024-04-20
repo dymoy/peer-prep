@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_USER} from '../utils/queries';
-import { ADD_ATTENDEE, REMOVE_ATTENDEE } from '../utils/mutations';
+import { QUERY_USER, QUERY_MY_SESSIONS, QUERY_ALL_SESSIONS} from '../utils/queries';
+import { ADD_ATTENDEE, REMOVE_ATTENDEE, DELETE_SESSION } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 import dayjs from 'dayjs';
@@ -9,7 +10,6 @@ import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(CustomParseFormat);
 
 const SessionList = ({ sessions }) => {
-  
   // query user to retrieve username for given ID
   const getUser = (userId) => {
     const { loading, data } = useQuery(QUERY_USER, {
@@ -35,7 +35,12 @@ const SessionList = ({ sessions }) => {
   }
   
   // Adds the current auth user to the attendees array of the selected Session
-  const [addAttendee, { addAttendeeError }] = useMutation(ADD_ATTENDEE);
+  const [addAttendee, { addAttendeeError }] = useMutation(ADD_ATTENDEE, {
+    refetchQueries: [
+      QUERY_MY_SESSIONS,
+      QUERY_ALL_SESSIONS
+    ]
+  });
 
   const handleAddAttendee = async (sessionId) => {
     try {
@@ -46,14 +51,18 @@ const SessionList = ({ sessions }) => {
       if (addAttendeeError) { 
         throw new Error(`Failed to add attendee to session ${sessionId}.`);
       }
-
     } catch (err) {
       console.error(err);
     }
   }
 
   // Removes the current auth user from the attendees array of the selected Session
-  const [removeAttendee, { removeAttendeeError }] = useMutation(REMOVE_ATTENDEE);
+  const [removeAttendee, { removeAttendeeError }] = useMutation(REMOVE_ATTENDEE, {
+    refetchQueries: [
+      QUERY_MY_SESSIONS,
+      QUERY_ALL_SESSIONS
+    ]
+  });
   
   const handleRemoveAttendee = async (sessionId) => {
     try {
@@ -82,10 +91,19 @@ const SessionList = ({ sessions }) => {
   }
 
   //
-  const handleDeleteSession = async (id) => {
-    try {
-      console.log('entered handleDeleteSesion');
+  const [deleteSession, {deleteSessionError}] = useMutation(DELETE_SESSION);
 
+  const handleDeleteSession = async (sessionId) => {
+    try {
+      console.log(`entered handleDeleteSesion with id: ${sessionId}`);
+
+      const { data } = await deleteSession({
+        variables: { sessionId: sessionId }
+      });
+
+      if (deleteSessionError) {
+        throw new Error(`Failed to delete session (id: ${sessionId} from the database.`);
+      }
     } catch (err) {
       console.error(err);
     }
