@@ -1,5 +1,7 @@
+import { useState } from 'react';
+import { Link,  useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_USER } from '../utils/queries';
+import { QUERY_USER} from '../utils/queries';
 import { ADD_ATTENDEE, REMOVE_ATTENDEE } from '../utils/mutations';
 import Auth from '../utils/auth';
 
@@ -68,6 +70,17 @@ const SessionList = ({ sessions }) => {
       console.log(err);
     }    
   }
+
+  //
+  const navigate = useNavigate();
+
+  const handleUpdateSession = async (id) => {
+    try {
+      navigate('/updatesession', { state: { sessionId: id } });
+    } catch (err) {
+      console.log(err);
+    }
+  }
   
   // Get duration of meeting using start and end times
   const getDuration = (startTime, endTime) => {
@@ -77,7 +90,6 @@ const SessionList = ({ sessions }) => {
 
     let duration = endDate.diff(startDate, 'hour', true).toPrecision(3);
     let remainder = duration.split('.')[1];
-    console.log(remainder.charAt(0));
 
     if (remainder.charAt(0) === '0' && remainder.charAt(1) === '0') {
       duration = duration.split('.')[0];
@@ -121,12 +133,25 @@ const SessionList = ({ sessions }) => {
               <p>{session.description}</p>
             </div>
             { Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (!isAttending(session.attendees)) && 
-              // TODO: Conditional render the button depending on whether the user is already registered to the session 
-              <button className="btn btn-primary btn-block py-3" type="submit" onClick={ () => handleAddAttendee(session._id) }>Register to the Session!</button>
+              // Render a register button if the user is not already attending the session
+              <button className="btn btn-primary btn-block py-3" onClick={ () => handleAddAttendee(session._id) }>Register</button>
             }
             { Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (isAttending(session.attendees)) && 
-              // TODO: Conditional render the button depending on whether the user is already registered to the session 
-              <button className="btn btn-primary btn-block py-3" type="submit" onClick={ () => handleRemoveAttendee(session._id) }>Unregister from the Session!</button>
+              // Render an unregister button if the user is already attending the session 
+              <button className="btn btn-primary btn-block py-3" onClick={ () => handleRemoveAttendee(session._id) }>Unregister</button>
+            }
+
+            {
+              Auth.loggedIn() && ( Auth.getProfile().data._id == session.host._id ) && (window.location.pathname === '/mysessions') && 
+              
+              // Render an update session button if the user is on the /mysessions page and is the host of the session
+              // <Link to={'/updatesession'}>Update Session</Link> 
+              //</div>state={{session: 'session'}}
+              
+              <button className="btn btn-primary btn-block py-3" type="submit" onClick={ () => handleUpdateSession(session._id) }>Update Session</button>
+              // <div>
+              //   <button className="btn btn-primary btn-block py-3" type="submit" onClick={ () => handleUpdateSession(session._id) }>Delete Session</button>
+              // </div>
             }
           </div>
         ))}

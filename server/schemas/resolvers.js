@@ -43,7 +43,10 @@ const resolvers = {
 
         // Get a single session by sessionId
         singleSession: async(parent, { sessionId }) => {
-            return Session.findOne({ _id: sessionId });
+            const session = await Session.findOne({ _id: sessionId }).lean();
+
+            console.log(session);
+            return session;
         }
     }, 
 

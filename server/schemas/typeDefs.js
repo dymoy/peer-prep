@@ -85,7 +85,7 @@ const typeDefs = gql`
         user(id: ID!): User
         allSessions: [Session]
         mySessions: [Session]
-        singleSession(sesionId: ID!): Session
+        singleSession(sessionId: ID!): Session
     }
 
     type Mutation {

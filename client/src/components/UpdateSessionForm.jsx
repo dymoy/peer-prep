@@ -1,22 +1,41 @@
 import { useState } from 'react';
-import { useMutation } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_SINGLE_SESSION } from '../utils/queries';
+import dayjs from 'dayjs';
 
-import { ADD_SESSION } from '../utils/mutations';
+
 import Auth from '../utils/auth';
 
-const SessionForm = () => {
+const UpdateSessionForm = ({sessionId}) => {
+
+    const { loading, data } = useQuery(QUERY_SINGLE_SESSION, {
+        variables: {
+            sessionId: sessionId
+        }
+    });
+
+    const session = data?.singleSession || {};
+
+    console.log(session.start_date);
+    console.log(session.end_date);
+
+    const startDate = new Date(parseInt(session.start_date));
+    const startVal = dayjs(startDate).format('YYYY-MM-DDTHH:mm');
+    
+    const endDate = new Date(parseInt(session.end_date));
+    const endVal = dayjs(endDate).format('YYYY-MM-DDTHH:mm');
+    console.log(endVal);
+
     // Create states to keep track of all form fields to create the Session document
-    const [title, setTitle] = useState('');
-    const [unit, setUnit] = useState('');
-    const [description, setDescription] = useState('');
-    const [start_date, setStartDate] = useState('');
-    const [end_date, setEndDate] = useState('');
-    const [link, setLink] = useState('');
+    const [title, setTitle] = useState(session.title);
+    const [unit, setUnit] = useState(session.unit);
+    const [description, setDescription] = useState(session.description);
+    const [start_date, setStartDate] = useState(startVal || '');
+    const [end_date, setEndDate] = useState(endVal || '');
+    const [link, setLink] = useState(session.link);
 
     // Create a state for error to notify user when a field value is invalid
     const [error, setError] = useState('');
-
-    const [addSession, { mutationError }] = useMutation(ADD_SESSION);
 
     // Implement handleInputChange to validate the states of each field 
     const handleInputChange = (event) => {
@@ -90,39 +109,32 @@ const SessionForm = () => {
             start_date: start_date,
             end_date: end_date,
             link: link,
-            host: Auth.getProfile().data._id,
-            attendees: []
         };
 
         try {
-            // useMutation addSession to create the session using sessionData as sessionInput
-            const { data } = await addSession({
-                variables: {
-                    "sessionInput": sessionData,
-                }
-            });
+            // useMutation updateSession to update the session using sessionData as sessionInput
+            
 
             // Reset states
-            setTitle('');
-            setUnit('');
-            setDescription('');
-            setStartDate('');
-            setEndDate('');
-            setLink('');
-            setError('');
+            // setTitle('');
+            // setUnit('');
+            // setDescription('');
+            // setStartDate('');
+            // setEndDate('');
+            // setLink('');
+            // setError('');
 
             // Redirect the user back to MySessions page
-            window.location = '/mysessions';
+            // window.location = '/mysessions';
         } catch (err) {
             console.error(err);
         }
     }
 
+    // return;
     return (
-        <div id='new-session-main'>
-            <h4>Let's get prepping! </h4>
-            <h5>Enter the details of your session below:</h5>
-            
+        <div id='update-session-main'>
+            <h5>Update Session Details</h5>
             <form className="flex-row justify-center justify-space-between-md align-center" onSubmit={handleFormSubmit}>
             
                 <div className="col-12 col-lg-9">
@@ -137,6 +149,7 @@ const SessionForm = () => {
                             className="input-new-session"
                             onChange={handleInputChange} 
                             onBlur={validateFilled}
+                            value={title}
                         />
                     </section>
                     <section className="py-2">
@@ -150,6 +163,7 @@ const SessionForm = () => {
                             className="input-new-session"
                             onChange={handleInputChange} 
                             onBlur={validateFilled}
+                            value={unit}
                         />
                     </section>
                     <section className='py-2'>
@@ -163,6 +177,7 @@ const SessionForm = () => {
                             className="input-new-session"
                             onChange={handleInputChange}
                             onBlur={validateFilled}
+                            defaultValue={description}
                         />
                     </section>
                     <section className='py-2'>
@@ -172,8 +187,8 @@ const SessionForm = () => {
                             required
                             type="datetime-local" 
                             name="start_date"
-                            
                             onChange={handleDateChange}
+                            value={start_date}
                         />
                     </section>
                     <section className='py-2'>
@@ -184,6 +199,7 @@ const SessionForm = () => {
                             type="datetime-local" 
                             name="end_date" 
                             onChange={handleDateChange}
+                            value={end_date}
                         />   
                     </section>
                     <section className='py-2'>
@@ -195,7 +211,9 @@ const SessionForm = () => {
                             placeholder="Enter the meeting link for which you'll be hosting the session" 
                             size='100' 
                             className="input-new-session"
-                            onChange={handleInputChange}/>
+                            onChange={handleInputChange}
+                            value={link}
+                        />    
                     </section>
                 </div>
                 {/* Present errors, if any */}
@@ -204,11 +222,10 @@ const SessionForm = () => {
                         <p className="error-text">* {error} *</p>
                     </div>
                 )}
-                <button className="btn btn-primary" type="submit" style={{ backgroundColor: '#d6d4c7', color: '#9d4836', margin: '40px 40px', fontWeight: 'bold', border: 'none' }}>Create Session!</button>
-
+                <button className="btn btn-primary" type="submit" style={{ backgroundColor: '#d6d4c7', color: '#9d4836', margin: '40px 40px', fontWeight: 'bold', border: 'none' }}>Save</button>
             </form>
         </div>
     );
 }
 
-export default SessionForm;
+export default UpdateSessionForm;

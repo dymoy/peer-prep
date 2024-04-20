@@ -72,19 +72,18 @@ export const QUERY_MY_SESSIONS = gql`
 `;
 
 export const QUERY_SINGLE_SESSION = gql`
-    query SingleSession($sesionId: ID!) {
-        singleSession(sesionId: $sesionId) {
-            _id
+    query SingleSession($sessionId: ID!) {
+        singleSession(sessionId: $sessionId) {
             title
             description
             unit
             start_date
             end_date
             host {
-                username
+                _id
             }
             attendees {
-                username
+                _id
             }
             link
         }
