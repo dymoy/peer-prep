@@ -1,8 +1,10 @@
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
+import { ADD_ATTENDEE } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const SessionList = ({ sessions }) => {
+  const [addAttendee, { error }] = useMutation(ADD_ATTENDEE);
 
   // query user to retrieve username for given ID
   const getUser = (userId) => {
@@ -16,8 +18,15 @@ const SessionList = ({ sessions }) => {
   }
 
   // Adds the current auth user to the attendees array of the selected Session
-  const registerAttendee = () => {
-    console.log(Auth.getProfile().data);
+  const handleAddAttendee = async (sessionId) => {
+    console.log('Registering attendee..');
+    console.log(sessionId);
+    // const { data } = await addAttendee({
+    //   variables: { sessionId: sessionId }
+    // });
+
+    console.log(data);
+    
     // TODO: Call mutation to addAttendee 
     return;
   }
@@ -48,7 +57,7 @@ const SessionList = ({ sessions }) => {
               <p>{session.description}</p>
             </div>
             { Auth.loggedIn() && Auth.getProfile().data.username !== getUser(session.host._id) &&
-              <button className="btn btn-primary btn-block py-3" type="submit" onClick={ registerAttendee }>Register to Session!</button>
+              <button className="btn btn-primary btn-block py-3" type="submit" onClick={ handleAddAttendee(session._id) }>Register to Session!</button>
             }
           </div>
         ))}

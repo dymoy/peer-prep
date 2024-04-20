@@ -118,6 +118,20 @@ const resolvers = {
             throw AuthenticationError;
         }, 
 
+        addAttendee: async (parent, { sessionId }, context) => {
+            if (context.user) {
+                // Add context user Id to the session attendees array
+                const session = await Session.findOneAndUpdate(
+                    { _id: sessionId },
+                    { $push: { attendees: context.user._id }}
+                )
+
+                console.log(session);
+                return session;
+            }
+            throw AuthenticationError;
+        },
+
         addPost: async (parent, { postInput }, context) => {
             if (context.user) {
                 // Create the post document 
