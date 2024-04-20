@@ -93,8 +93,8 @@ const typeDefs = gql`
         login(email: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
         addSession(sessionInput: SessionInput!): Session
-        removeSession(sessionId: ID!): Session
         updateSession(sessionInput: SessionInput!): Session
+        deleteSession(sessionId: ID!): Session
         addAttendee(sessionId: ID!): Session
         removeAttendee(sessionId: ID!): Session
         addPost(postInput: PostInput!): Post

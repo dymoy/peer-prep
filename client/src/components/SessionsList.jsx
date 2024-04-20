@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Link,  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_USER} from '../utils/queries';
-import { ADD_ATTENDEE, REMOVE_ATTENDEE } from '../utils/mutations';
+import { QUERY_USER, QUERY_MY_SESSIONS, QUERY_ALL_SESSIONS} from '../utils/queries';
+import { ADD_ATTENDEE, REMOVE_ATTENDEE, DELETE_SESSION } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 import dayjs from 'dayjs';
@@ -10,7 +10,6 @@ import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(CustomParseFormat);
 
 const SessionList = ({ sessions }) => {
-  
   // query user to retrieve username for given ID
   const getUser = (userId) => {
     const { loading, data } = useQuery(QUERY_USER, {
@@ -36,7 +35,12 @@ const SessionList = ({ sessions }) => {
   }
   
   // Adds the current auth user to the attendees array of the selected Session
-  const [addAttendee, { addAttendeeError }] = useMutation(ADD_ATTENDEE);
+  const [addAttendee, { addAttendeeError }] = useMutation(ADD_ATTENDEE, {
+    refetchQueries: [
+      QUERY_MY_SESSIONS,
+      QUERY_ALL_SESSIONS
+    ]
+  });
 
   const handleAddAttendee = async (sessionId) => {
     try {
@@ -47,14 +51,18 @@ const SessionList = ({ sessions }) => {
       if (addAttendeeError) { 
         throw new Error(`Failed to add attendee to session ${sessionId}.`);
       }
-
     } catch (err) {
       console.error(err);
     }
   }
 
   // Removes the current auth user from the attendees array of the selected Session
-  const [removeAttendee, { removeAttendeeError }] = useMutation(REMOVE_ATTENDEE);
+  const [removeAttendee, { removeAttendeeError }] = useMutation(REMOVE_ATTENDEE, {
+    refetchQueries: [
+      QUERY_MY_SESSIONS,
+      QUERY_ALL_SESSIONS
+    ]
+  });
   
   const handleRemoveAttendee = async (sessionId) => {
     try {
@@ -78,11 +86,31 @@ const SessionList = ({ sessions }) => {
     try {
       navigate('/updatesession', { state: { sessionId: id } });
     } catch (err) {
-      console.log(err);
+      console.error(err);
+    }
+  }
+
+  //
+  const [deleteSession, {deleteSessionError}] = useMutation(DELETE_SESSION);
+
+  const handleDeleteSession = async (sessionId) => {
+    try {
+      console.log(`entered handleDeleteSesion with id: ${sessionId}`);
+
+      const { data } = await deleteSession({
+        variables: { sessionId: sessionId }
+      });
+
+      if (deleteSessionError) {
+        throw new Error(`Failed to delete session (id: ${sessionId} from the database.`);
+      }
+    } catch (err) {
+      console.error(err);
     }
   }
   
   // Get duration of meeting using start and end times
+  // TODO: Debug - precision giving error
   const getDuration = (startTime, endTime) => {
     
     const startDate = dayjs(startTime, 'MMM Do, YYYY [at] h:mm a');
@@ -132,26 +160,26 @@ const SessionList = ({ sessions }) => {
             <div className="card-body bg-light" id="session-box-description">
               <p>{session.description}</p>
             </div>
-            { Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (!isAttending(session.attendees)) && 
-              // Render a register button if the user is not already attending the session
-              <button className="btn btn-primary btn-block py-3" onClick={ () => handleAddAttendee(session._id) }>Register</button>
-            }
-            { Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (isAttending(session.attendees)) && 
-              // Render an unregister button if the user is already attending the session 
-              <button className="btn btn-primary btn-block py-3" onClick={ () => handleRemoveAttendee(session._id) }>Unregister</button>
-            }
+            <div className='d-flex justify-content-center'>
+              { Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (!isAttending(session.attendees)) && 
+                // Render a register button if the user is not already attending the session
+                <button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} onClick={ () => handleAddAttendee(session._id) }>Register</button>
+              }
+              { Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (isAttending(session.attendees)) && 
+                // Render an unregister button if the user is already attending the session 
+                <button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} onClick={ () => handleRemoveAttendee(session._id) }>Unregister</button>
+              }
+            </div>
 
             {
               Auth.loggedIn() && ( Auth.getProfile().data._id == session.host._id ) && (window.location.pathname === '/mysessions') && 
               
               // Render an update session button if the user is on the /mysessions page and is the host of the session
-              // <Link to={'/updatesession'}>Update Session</Link> 
-              //</div>state={{session: 'session'}}
               
-              <button className="btn btn-primary btn-block py-3" type="submit" onClick={ () => handleUpdateSession(session._id) }>Update Session</button>
-              // <div>
-              //   <button className="btn btn-primary btn-block py-3" type="submit" onClick={ () => handleUpdateSession(session._id) }>Delete Session</button>
-              // </div>
+              <div className='d-flex justify-content-evenly'>
+                <button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} type="submit" onClick={ () => handleUpdateSession(session._id) }>Update Session</button>
+                <button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} type="submit" onClick={ () => handleDeleteSession(session._id) }>Delete Session</button>
+              </div>
             }
           </div>
         ))}

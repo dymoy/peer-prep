@@ -103,32 +103,46 @@ const resolvers = {
             throw AuthenticationError;
         },
 
-        removeSession: async (parent, { sessionId }, context) => {
+        updateSession: async (parent, { sessionInput }, context) => {
             if (context.user) {
-                // Delete and store the requested session document
-                const session = await Session.findOneAndDelete({
-                    _id: sessionId
-                });
-
-                // Update the user's sessions array 
-                await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    { $pull: { sessions: session._id }}
+                const session = await Session.findOneAndUpdate(
+                    { _id: sessionInput._id},
+                    { ...sessionInput },
+                    { new: true }
                 );
-
+    
                 return session;
             }
-            throw AuthenticationError;
-        }, 
+            throw new AuthenticationError;
+        },
 
-        updateSession: async (parent, { sessionInput }) => {
-            const session = await Session.findOneAndUpdate(
-                { _id: sessionInput._id},
-                { ...sessionInput },
-                { new: true }
-            );
-
-            return session;
+        deleteSession: async (parent, { sessionId }, context) => {
+            if (context.user) {
+                // Delete the session document from the db 
+                const session = await Session.findOneAndDelete(
+                    { _id: sessionId }
+                );
+    
+                // Remove the session from the user's array of sessions 
+                await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { sessions: sessionId }},
+                );
+    
+                // Remove the session from all attendee's array of sessions 
+                const { attendees } = session;
+                if(attendees.length) {
+                    attendees.map(async (attendeeId) => {
+                        await User.findOneAndUpdate(
+                            { _id: attendeeId },
+                            { $pull: { sessions: sessionId }}
+                        );
+                    });
+                }
+    
+                return session;
+            }
+            throw new AuthenticationError;
         },
 
         addAttendee: async (parent, { sessionId }, context) => {
@@ -140,6 +154,13 @@ const resolvers = {
                     { new: true}
                 )
 
+                // Add sessionId to the attendee's sessions array 
+                await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $push: { sessions: sessionId }},
+                    { new: true }
+                );
+
                 return session;
             }
             throw AuthenticationError;
@@ -147,11 +168,18 @@ const resolvers = {
 
         removeAttendee: async (parent, { sessionId }, context) => {
             if (context.user) {
-                // Add context user Id to the session attendees array
+                // Remove context user Id to the session attendees array
                 const session = await Session.findOneAndUpdate(
                     { _id: sessionId },
                     { $pull: { attendees: context.user._id }},
                     { new: true}
+                )
+
+                // Remove session Id from the user's session array 
+                await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { sessions: sessionId }},
+                    { new: true }
                 )
                 
                 return session;
