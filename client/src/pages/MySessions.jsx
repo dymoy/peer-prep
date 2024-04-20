@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import SessionList from "../components/SessionsList";
-import { QUERY_MY_SESSIONS } from '../utils/queries';
+import { QUERY_ALL_SESSIONS, QUERY_MY_SESSIONS } from '../utils/queries';
 import { Link } from 'react-router-dom';
 
 const MySessions = () => {

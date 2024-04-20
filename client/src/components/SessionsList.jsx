@@ -8,30 +8,40 @@ import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(CustomParseFormat);
 
 const SessionList = ({ sessions }) => {
-  const [addAttendee, { error }] = useMutation(ADD_ATTENDEE);
-
+  
   // query user to retrieve username for given ID
   const getUser = (userId) => {
     const { loading, data } = useQuery(QUERY_USER, {
-        variables: {
-          userId: userId 
-        }
+      variables: {
+        userId: userId 
+      }
     });
-
+    
     return data?.user.username || '';
   }
+  
+  const [addAttendee, { error }] = useMutation(ADD_ATTENDEE);
 
   // Adds the current auth user to the attendees array of the selected Session
   const handleAddAttendee = async (sessionId) => {
+    // TODO: Call mutation to addAttendee 
+
     console.log('Registering attendee..');
     console.log(sessionId);
-    // const { data } = await addAttendee({
-    //   variables: { sessionId: sessionId }
-    // });
 
-    console.log(data);
+    try {
+      const { data } = await addAttendee({
+        variables: { sessionId: sessionId }
+      });
+  
+      if (error) { 
+        throw new Error(`Failed to add attendee to session ${sessionId}.`);
+      }
+
+    } catch (err) {
+      console.error(err);
+    }
     
-    // TODO: Call mutation to addAttendee 
     return;
   }
   
@@ -57,7 +67,7 @@ const SessionList = ({ sessions }) => {
 
   // If no sessions exist in the database, notify the user 
   if (!sessions.length) {
-    return <h3 class="no-sessions">No sessions Yet</h3>;
+    return <h3 className="no-sessions">No sessions Yet</h3>;
   }
 
   return (
@@ -87,7 +97,7 @@ const SessionList = ({ sessions }) => {
               <p>{session.description}</p>
             </div>
             { Auth.loggedIn() && Auth.getProfile().data.username !== getUser(session.host._id) &&
-              <button className="btn btn-primary btn-block py-3" type="submit" onClick={ handleAddAttendee(session._id) }>Register to Session!</button>
+              <button className="btn btn-primary btn-block py-3" type="submit" onClick={ () => handleAddAttendee(session._id) }>Register to Session!</button>
             }
           </div>
         ))}
