@@ -80,7 +80,8 @@ const SignUp = () => {
         <Button
           disabled={!(userFormData.username && userFormData.email && userFormData.password)}
           type='submit'
-          variant='success'>
+          variant='success'
+          style={{ backgroundColor: '#d6d4c7', color: '#9d4836', margin: '40px 40px', fontWeight: 'bold', border: 'none' }}>
           Submit
         </Button>
       </Form>

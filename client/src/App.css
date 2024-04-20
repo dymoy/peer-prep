@@ -8,7 +8,7 @@
 }
 
 #icon {
-    height: 150px;
+    height: 100px;
 }
 
 #icon-title-group {
@@ -19,7 +19,7 @@
 }
 
 #site-title {
-    font-size: 45px;
+    font-size: 35px;
     letter-spacing: 1.5px;
     padding-left: 10px;    
     color: #9d4836;
@@ -51,6 +51,11 @@ main {
     background-color: #9d4836;
 }
 
+#new-session-main {
+    padding: 15px;
+    background-color: #9d4836;
+}
+
 #welcome-section {
     background-color: #9d4836;
     padding: 60px 40px;
@@ -68,9 +73,10 @@ main {
 }
 
 #session-box {
-    width: 900px;
-    padding-left: 40px;
+    width: 90vw;
+    padding: 40px;
     align-self: center;
+
 }
 
 #session-box h3 {
@@ -85,11 +91,41 @@ main {
     font-weight: bold;
     line-height: 1.8;
 }
+.card {
+    margin-bottom: 50px;
+}
 
 #session-box-description {
     color: black;
     font-weight: bold;
 }
+
+/* MySessions List */
+.no-sessions {
+    height: 100vh;
+    padding: 10px;
+    color: white;
+    font-size: 20px;
+    padding: 40px 40px;
+}
+
+/* NewSession form */
+#new-session-main {
+    padding: 15px;
+    background-color: #9d4836;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#new-session-main h4, #new-session-main h5, .form-label {
+    color: white
+}
+
+.input-new-session {
+    width: 90vw;
+}
+
 
 
 
