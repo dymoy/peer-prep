@@ -10,8 +10,6 @@ const typeDefs = gql`
         username: String!
         email: String!
         sessions: [Session]
-        posts: [Post]
-        comments: [Comment]
     }
 
     type Session { 
@@ -24,25 +22,6 @@ const typeDefs = gql`
         link: String
         host: User
         attendees: [User]
-    }
-
-    type Post {
-        _id: ID!
-        title: String
-        content: String
-        topics: String
-        author: User
-        created_At: String
-        solved: Boolean
-        comments: [Comment]
-    }
-
-    type Comment { 
-        _id: ID!
-        content: String
-        created_At: String
-        user: User
-        post: Post
     }
 
     type Auth {
@@ -62,25 +41,6 @@ const typeDefs = gql`
         attendees: [String]
     }
     
-    input PostInput {
-        _id: ID!
-        title: String
-        content: String
-        topics: String
-        author: ID
-        created_At: String
-        solved: Boolean
-        comments: [ID]
-    }
-    
-    input CommentInput {
-        _id: ID!
-        content: String
-        created_At: String
-        user: ID
-        post: ID
-    }
-    
     type Query { 
         me: User
         user(id: ID!): User
@@ -97,9 +57,6 @@ const typeDefs = gql`
         deleteSession(sessionId: ID!): Session
         addAttendee(sessionId: ID!): Session
         removeAttendee(sessionId: ID!): Session
-        addPost(postInput: PostInput!): Post
-        removePost(_id: ID!): Post
-        addComment(postId: ID!, commentInput: CommentInput!): Comment
     }
 `;
 
