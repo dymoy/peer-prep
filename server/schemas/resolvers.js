@@ -29,12 +29,14 @@ const resolvers = {
         // Get the sessions for the user by username
         mySessions: async(parent, args, context) => {
             const sessions = await Session.find({ 
-                host: context.user._id,
+                $or: [
+                    { host: context.user._id },
+                    { attendees: context.user._id }
+                ],
                 start_date: {
                     $gte: Date.now()
                 }
             }).sort({ start_date: 1 });
-            console.log(sessions);
             
             return sessions;
         },
