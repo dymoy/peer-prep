@@ -57,10 +57,23 @@ export const ADD_SESSION = gql`
 `;
 
 export const ADD_ATTENDEE = gql`
-    mutation Mutation($sessionId: ID!) {
+    mutation addAttendee($sessionId: ID!) {
         addAttendee(sessionId: $sessionId) {
             _id
-            title
+            host {
+                _id
+            }
+            attendees {
+                _id
+            }
+        }
+    }
+`;
+
+export const REMOVE_ATTENDEE = gql`
+    mutation removeAttendee($sessionId: ID!) {
+        removeAttendee(sessionId: $sessionId) {
+            _id
             host {
                 _id
             }

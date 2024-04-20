@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
-import { ADD_ATTENDEE } from '../utils/mutations';
+import { ADD_ATTENDEE, REMOVE_ATTENDEE } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 import dayjs from 'dayjs';
@@ -19,30 +19,54 @@ const SessionList = ({ sessions }) => {
     
     return data?.user.username || '';
   }
+
+  // Helper function to determine if the active user is already registered to the session in question
+  const isAttending = (attendees) => {
+    var attending = false;
+
+    attendees.forEach((attendee) => {
+      if (attendee._id == Auth.getProfile().data._id) {
+        attending = true;
+      }
+    });
+
+    return attending;
+  }
   
-  const [addAttendee, { error }] = useMutation(ADD_ATTENDEE);
-
   // Adds the current auth user to the attendees array of the selected Session
+  const [addAttendee, { addAttendeeError }] = useMutation(ADD_ATTENDEE);
+
   const handleAddAttendee = async (sessionId) => {
-    // TODO: Call mutation to addAttendee 
-
-    console.log('Registering attendee..');
-    console.log(sessionId);
-
     try {
       const { data } = await addAttendee({
         variables: { sessionId: sessionId }
       });
   
-      if (error) { 
+      if (addAttendeeError) { 
         throw new Error(`Failed to add attendee to session ${sessionId}.`);
       }
 
     } catch (err) {
       console.error(err);
     }
-    
-    return;
+  }
+
+  // Removes the current auth user from the attendees array of the selected Session
+  const [removeAttendee, { removeAttendeeError }] = useMutation(REMOVE_ATTENDEE);
+  
+  const handleRemoveAttendee = async (sessionId) => {
+    try {
+        const { data } = await removeAttendee({
+          variables: { sessionId: sessionId }
+        });
+
+        if (removeAttendeeError) {
+          throw new Error(`Failed to remove attendee from the session ${sessionId}.`);
+        }
+
+    } catch (err){
+      console.log(err);
+    }    
   }
   
   // Get duration of meeting using start and end times
@@ -96,8 +120,13 @@ const SessionList = ({ sessions }) => {
             <div className="card-body bg-light" id="session-box-description">
               <p>{session.description}</p>
             </div>
-            { Auth.loggedIn() && Auth.getProfile().data.username !== getUser(session.host._id) &&
-              <button className="btn btn-primary btn-block py-3" type="submit" onClick={ () => handleAddAttendee(session._id) }>Register to Session!</button>
+            { Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (!isAttending(session.attendees)) && 
+              // TODO: Conditional render the button depending on whether the user is already registered to the session 
+              <button className="btn btn-primary btn-block py-3" type="submit" onClick={ () => handleAddAttendee(session._id) }>Register to the Session!</button>
+            }
+            { Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (isAttending(session.attendees)) && 
+              // TODO: Conditional render the button depending on whether the user is already registered to the session 
+              <button className="btn btn-primary btn-block py-3" type="submit" onClick={ () => handleRemoveAttendee(session._id) }>Unregister from the Session!</button>
             }
           </div>
         ))}

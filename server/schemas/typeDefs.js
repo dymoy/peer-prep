@@ -94,6 +94,7 @@ const typeDefs = gql`
         addSession(sessionInput: SessionInput!): Session
         removeSession(sessionId: ID!): Session
         addAttendee(sessionId: ID!): Session
+        removeAttendee(sessionId: ID!): Session
         addPost(postInput: PostInput!): Post
         removePost(_id: ID!): Post
         addComment(postId: ID!, commentInput: CommentInput!): Comment

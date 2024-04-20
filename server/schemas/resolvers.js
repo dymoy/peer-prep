@@ -121,8 +121,6 @@ const resolvers = {
         }, 
 
         addAttendee: async (parent, { sessionId }, context) => {
-            console.log(context.user);
-
             if (context.user) {
                 // Add context user Id to the session attendees array
                 const session = await Session.findOneAndUpdate(
@@ -131,6 +129,20 @@ const resolvers = {
                     { new: true}
                 )
 
+                return session;
+            }
+            throw AuthenticationError;
+        },
+
+        removeAttendee: async (parent, { sessionId }, context) => {
+            if (context.user) {
+                // Add context user Id to the session attendees array
+                const session = await Session.findOneAndUpdate(
+                    { _id: sessionId },
+                    { $pull: { attendees: context.user._id }},
+                    { new: true}
+                )
+                
                 console.log(session);
                 return session;
             }
