@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import { UPDATE_SESSION } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const UpdateSessionForm = ({session}) => {
@@ -76,11 +77,14 @@ const UpdateSessionForm = ({session}) => {
         }
     }
 
+    const [updateSession, { updateSessionError }] = useMutation(UPDATE_SESSION);
+
     // Implement handleFormSubmit that uses addSession mutation and redirects the user to My Sessions page 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 
         const sessionData = {
+            _id: session._id,
             title: title,
             unit: unit,
             description: description,
@@ -89,23 +93,16 @@ const UpdateSessionForm = ({session}) => {
             link: link,
         };
 
-        console.log(sessionData);
-
         try {
             // useMutation updateSession to update the session using sessionData as sessionInput
-            
-
-            // Reset states
-            // setTitle('');
-            // setUnit('');
-            // setDescription('');
-            // setStartDate('');
-            // setEndDate('');
-            // setLink('');
-            // setError('');
+            const { data } = await updateSession({
+                variables: {
+                    "sessionInput": sessionData,
+                }
+            });
 
             // Redirect the user back to MySessions page
-            // window.location = '/mysessions';
+            window.location = '/mysessions';
         } catch (err) {
             console.error(err);
         }

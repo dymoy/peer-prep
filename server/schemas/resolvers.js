@@ -45,7 +45,6 @@ const resolvers = {
         singleSession: async(parent, { sessionId }) => {
             const session = await Session.findOne({ _id: sessionId }).lean();
 
-            console.log(session);
             return session;
         }
     }, 
@@ -87,7 +86,6 @@ const resolvers = {
 
         addSession: async (parent, { sessionInput }, context) => {
             // Check that the user is authenticated
-            console.log("entered addSession resolvers");
             if (context.user) {
                 // Create the session document
                 const session = await Session.create({
@@ -123,6 +121,16 @@ const resolvers = {
             throw AuthenticationError;
         }, 
 
+        updateSession: async (parent, { sessionInput }) => {
+            const session = await Session.findOneAndUpdate(
+                { _id: sessionInput._id},
+                { ...sessionInput },
+                { new: true }
+            );
+
+            return session;
+        },
+
         addAttendee: async (parent, { sessionId }, context) => {
             if (context.user) {
                 // Add context user Id to the session attendees array
@@ -146,7 +154,6 @@ const resolvers = {
                     { new: true}
                 )
                 
-                console.log(session);
                 return session;
             }
             throw AuthenticationError;
