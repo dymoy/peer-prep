@@ -16,7 +16,7 @@ const SessionForm = () => {
     // Create a state for error to notify user when a field value is invalid
     const [error, setError] = useState('');
 
-    const [addSession, { mutationError }] = useMutation(ADD_SESSION);
+    const [addSession, { addSessionError }] = useMutation(ADD_SESSION);
 
     // Implement handleInputChange to validate the states of each field 
     const handleInputChange = (event) => {

@@ -56,6 +56,18 @@ export const ADD_SESSION = gql`
     }
 `;
 
+export const UPDATE_SESSION = gql`
+    mutation UPDATE_SESSION($sessionInput: SessionInput!) {
+        updateSession(sessionInput: $sessionInput) {
+            _id
+            title
+            host {
+                _id
+            }
+        }
+    }
+`;
+
 export const ADD_ATTENDEE = gql`
     mutation addAttendee($sessionId: ID!) {
         addAttendee(sessionId: $sessionId) {
