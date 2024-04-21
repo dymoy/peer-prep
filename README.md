@@ -1,156 +1,71 @@
-# 23 Final Project: MERN Stack Single-Page Application
+# Peer-Prep
 
-Projects have played a key role in your journey to becoming a full-stack web developer. As you apply for development jobs, your portfolio is absolutely vital to opening doors to opportunities. Your portfolio showcases high-quality deployed examples of your work, and you can use your finished projects for that very purpose.
+Peer-Prep is a MERN application tailored for aspiring developers seeking collaborative study groups to enhance their skills in coding and web development. The platform simplifies the organization of future study sessions, enabling users to create, explore, and enroll in sessions relevant to coding and web development topics. With Peer-Prep, users can seamlessly engage in a collaborative learning environment, fostering skill development and knowledge sharing among peers.
 
-This project is a fantastic opportunity to show employers your collaborative skills and coding abilities, especially in the context of a scalable, user-focused MERN app. Remember that employers want to see what you can do, but they also want to see how you work with other developers. The more examples of deployed collaborative work you have in your portfolio, the more likely you are to get an interview and a job.
+## Features
 
-## Project Requirements
+- **Session Creation**: Users can create study sessions with a title, description, start time, and end time, allowing them to specify the details of the session they intend to host.
+  
+- **JWT Authentication**: The application employs JSON Web Token (JWT) authentication to secure user access and ensure data privacy.
+  
+- **Session Listings**: Study sessions are listed for users to browse through and apply for in the main page.
+  
+## Technologies Used
 
-Your group will use everything you’ve learned throughout this course to create a MERN stack single-page application that works with real-world data to solve a real-world challenge, with a focus on data and user demand. This project will provide you with the best opportunity to demonstrate your problem-solving skills, which employers will want to see during interviews. Once again, the user story and acceptance criteria will depend on the project that you create, but your project must fulfill the following requirements:
+### Frontend
+- React
 
-* Use React for the front end.
+### Backend
+- Node.js
+- Express.js
+- GraphQL
+  
+### Database
+- MongoDB
+- Mongoose ODM
+  
+### Authentication
+- JSON Web Token (JWT)
 
-* Use GraphQL with a Node.js and Express.js server.
+## Installation Process
 
-* Use MongoDB and the Mongoose ODM for the database.
+### Prerequisites:
+- Node.js version 16.*
+- MongoDB
 
-* Use queries and mutations for retrieving, adding, updating, and deleting data.
+### Database Setup
+ This must be executed before launching the application
+1. Start MongoDB server.
+2. Navigate to the directory containing the schema file.
+3. Execute the following command:
+ mongorestore -d study_session_db path_to_dump_directory
 
-* Be deployed using Render (with data).
+### Application launch:
+1. Download the source code.
+2. Navigate to the root directory.
+3. Run the following commands:
+$ npm install
+$ npm start
 
-* Have a polished UI.
+## Usage Instructions
+1. Open the application.
+2. Log in or create an account.
+3. Create new study sessions or browse existing ones.
+4. Apply for study sessions to participate.
+5. Track upcoming study sessions and manage your schedule.
 
-* Be responsive.
 
-* Be interactive (i.e., accept and respond to user input).
+### Future Plans/Developments 
+- Implement payment integration using the Stripe payment platform, to support charitable donations or premium features.
+- Enhance the application's Progressive Web App (PWA) capabilities by integrating features such as a web manifest and service worker for offline functionality.
+- Enables features that don't necessarily have to do with the sessions, such as a posting and commenting system for less collaborative and long-formatted queries that just require small clarifications and avoiding potentially unnecessary time for the user.
 
-* Include authentication (JWT).
 
-* Protect sensitive API key information on the server.
+### Links
+- [Deployed Application](#) *()*
+- [Github Repo](#) *(https://github.com/dymoy/peer-prep)*
 
-* Have a clean repository that meets quality coding standards (file structure, naming conventions, best practices for class and id naming conventions, indentation, high-quality comments, etc.).
 
-* Have a high-quality README (with unique name, description, technologies used, screenshot, and link to deployed application).
 
-### CSS Styling
 
-Instead of using a CSS library like Bootstrap, consider one of the following suggestions:
 
-* Look into the concept of CSS-in-JS, which abstracts CSS to the component level, using JavaScript to describe styles in a declarative and maintainable way. Some popular libraries include [styled-components](https://styled-components.com/) and [Emotion](https://emotion.sh/docs/introduction).
-
-* Try using a component library, such as [Semantic UI](https://semantic-ui.com/), [Chakra UI](https://chakra-ui.com/), or [Ant Design](https://ant.design/).
-
-* Create all the CSS for your application just using CSS.
-
-Ultimately, it doesn't matter which of these options you choose&mdash;it just needs to look professional and be mobile-friendly.
-
-### Payment Platform
-
-Consider integrating the Stripe payment platform. Even if you don’t create an e-commerce application, you could set up your site to accept charitable donations.
-
-### Bonus
-
-Although this is not a requirement for your project, see if you can also implement functionality to meet the minimum requirements of a PWA:
-
-* Uses a web manifest
-
-* Uses a service worker for offline functionality
-
-* Is installable
-
-## Presentation Requirements
-
-Use this [project presentation template](https://docs.google.com/presentation/d/10QaO9KH8HtUXj__81ve0SZcpO5DbMbqqQr4iPpbwKks/edit?usp=sharing) to address the following:
-
-* Elevator pitch: a one minute description of your application
-
-* Concept: What is your user story? What was your motivation for development?
-
-* Process: What were the technologies used? How were tasks and roles broken down and assigned? What challenges did you encounter? What were your successes?
-
-* Demo: Show your stuff!
-
-* Directions for Future Development
-
-* Links to the deployed application and the GitHub repository. Use the [Deploy MERN Stack with Render and MongoDB Atlas guide](https://coding-boot-camp.github.io/full-stack/render/deploy-mern-stack-with-render-guide) on The Full-Stack Blog if you need a reminder on how to deploy to Render.
-
-## Grading Requirements
-
-This project is graded based on the following criteria:
-
-### Technical Acceptance Criteria: 25%
-
-* Satisfies the following code requirements:
-
-  * Application uses React for the front end.
-
-  * Application has a GraphQL API with a Node.js and Express.js server, and uses queries and mutations for retrieving, adding, updating, and deleting data.
-
-  * Application uses MongoDB and the Mongoose ODM for the database and protects sensitive API key information on the server.
-
-  * Application includes user authentication using JWT.
-
-### Concept 10%
-
-* Application should be a unique and novel idea.
-
-* Your group should clearly and concisely articulate your project idea.
-
-### Deployment: 20%
-
-* Application deployed at live URL on Render and loads with no errors.
-
-* Application GitHub URL submitted.
-
-### Repository Quality: 10%
-
-* Repository has a unique name.
-
-* Repository follows best practices for file structure and naming conventions.
-
-* Repository follows best practices for class and id naming conventions, indentation, quality comments, etc.
-
-* Repository contains multiple descriptive commit messages.
-
-* Repository contains a high-quality README file with description, screenshot, and link to deployed application.
-
-### Application Quality: 15%
-
-* Application user experience is intuitive and easy to navigate.
-
-* Application user interface style is clean and polished.
-
-* Application is responsive.
-
-### Presentation 10%
-
-* Your group should present using a slide deck.
-
-* Every group member should speak during the presentation.
-
-* Your presentation should follow the [Project Presentation Template](https://docs.google.com/presentation/d/10QaO9KH8HtUXj__81ve0SZcpO5DbMbqqQr4iPpbwKks/edit?usp=sharing).
-
-### Collaboration 10%
-
-* There are no major disparities in the number of GitHub contributions between group members.
-
-### Bonus
-
-Fulfilling all three of the following requirements to turn your app into a PWA will add 10 points to your grade. Note that the highest grade you can achieve is still a 100:
-
-* Uses a web manifest
-
-* Uses a service worker for offline functionality
-
-* Is installable
-
-## How to Submit Your MERN Stack Single-Page Application
-
-**Each member of your group** is required to submit the following for review:
-
-* The URL of the deployed application.
-
-* The URL of the GitHub repository, with a unique name and a README describing the project.
-
----
-© 2024 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
