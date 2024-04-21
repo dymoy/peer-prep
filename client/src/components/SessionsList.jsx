@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(CustomParseFormat);
 
-const SessionList = ({ sessions }) => {
+const SessionsList = ({ sessions }) => {
   // query user to retrieve username for given ID
   const getUser = (userId) => {
     const { loading, data } = useQuery(QUERY_USER, {
@@ -187,4 +187,4 @@ const SessionList = ({ sessions }) => {
   );
 };
 
-export default SessionList;
+export default SessionsList;
