@@ -1,10 +1,10 @@
-// Require npm packages 
+/* Require npm packages  */
 const express = require('express');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 
-// Require local src files for Apollo Server 
+/* Require local src files for Apollo Server  */
 const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
@@ -16,7 +16,7 @@ const server = new ApolloServer({
 	resolvers
 });
 
-// Create a new instance of an Apollo server with the GraphQL schema
+/* Create a new instance of an Apollo server with the GraphQL schema */
 const startApolloServer = async () => {
 	await server.start();
 	
@@ -45,5 +45,5 @@ const startApolloServer = async () => {
 	});
 }
 
-// Call the async function to start the server
+/* Call the async function to start the server */
 startApolloServer();

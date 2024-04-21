@@ -3,7 +3,6 @@
  * Handles JWT authentication for the user session
  */
 
-
 import decode from 'jwt-decode';
 
 class AuthService {

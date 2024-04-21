@@ -1,3 +1,9 @@
+/**
+ * @file formatDate.test.js
+ * Test Suite for the formatDate helper function
+ * Note: Test scripts validates in PST
+ */
+
 const { formatDate } = require('./formatDate');
 
 describe('formatDate', () => {
@@ -12,7 +18,7 @@ describe('formatDate', () => {
         const date = '2020-01-01T17:30:00.000Z';
         const formattedDate = formatDate(date);
 
-        expect(formattedDate).toBe('Jan 1st, 2020 at 5:30 pm');
+        expect(formattedDate).toBe('Jan 1st, 2020 at 9:30 am');
     });
 
     it('throws error if invalid date provided', () => {
