@@ -109,10 +109,9 @@ const UpdateSessionForm = ({session}) => {
     }
 
     return (
-        <div id='update-session-main'>
-            <h5>Update Session Details</h5>
-            <form className="flex-row justify-center justify-space-between-md align-center" onSubmit={handleFormSubmit}>
-            
+        <main id='update-session-main'>
+            <h4>Update Session Details</h4>
+            <form className="flex-row justify-center justify-space-between-md" onSubmit={handleFormSubmit}>
                 <div className="col-12 col-lg-9">
                     <section className='py-2'>
                         {/* Title */}
@@ -198,9 +197,9 @@ const UpdateSessionForm = ({session}) => {
                         <p className="error-text">* {error} *</p>
                     </div>
                 )}
-                <button className="btn btn-primary" type="submit" style={{ backgroundColor: '#d6d4c7', color: '#9d4836', margin: '40px 40px', fontWeight: 'bold', border: 'none' }}>Save</button>
+                <button className="btn btn-primary my-2" type="submit" style={{ backgroundColor: '#d6d4c7', color: '#9d4836', fontWeight: 'bold', border: 'none' }}>Save</button>
             </form>
-        </div>
+        </main>
     );
 }
 

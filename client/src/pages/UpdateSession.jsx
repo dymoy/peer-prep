@@ -38,9 +38,7 @@ const UpdateSession = () => {
     }
 
     return (
-        <div>
-            <UpdateSessionForm session={ formattedSession }/>
-        </div>
+        <UpdateSessionForm session={ formattedSession }/>
     )
 };
 
