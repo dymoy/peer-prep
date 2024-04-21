@@ -1,24 +1,24 @@
+/**
+ * @file SessionForm.jsx 
+ * React Component to render a form for authenticated users to create a new Session
+ */
+
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-
 import { ADD_SESSION } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const SessionForm = () => {
-    // Create states to keep track of all form fields to create the Session document
     const [title, setTitle] = useState('');
     const [unit, setUnit] = useState('');
     const [description, setDescription] = useState('');
     const [start_date, setStartDate] = useState('');
     const [end_date, setEndDate] = useState('');
     const [link, setLink] = useState('');
-
-    // Create a state for error to notify user when a field value is invalid
     const [error, setError] = useState('');
-
     const [addSession, { addSessionError }] = useMutation(ADD_SESSION);
 
-    // Implement handleInputChange to validate the states of each field 
+    /* Update the states based on form input changes */
     const handleInputChange = (event) => {
         const { name, value } = event.target;
 
@@ -33,7 +33,7 @@ const SessionForm = () => {
         }
     };
 
-    // Implment handleDateChange to validate the start date is before the end date, and vice versa
+    /* Validate the start date is before the end date, and vice versa, before updating the states */
     const handleDateChange = (event) => {
         const { name, value } = event.target;
 
@@ -66,7 +66,7 @@ const SessionForm = () => {
         }
     }
 
-    // Implement validateFilled to ensure that all fields are not empty
+    /* Ensure that fields are not empty when users click away from the input fields */
     const validateFilled = (event) => {
         const { name, value } = event.target;
 
@@ -79,10 +79,11 @@ const SessionForm = () => {
         }
     }
 
-    // Implement handleFormSubmit that uses addSession mutation and redirects the user to My Sessions page 
+    /* Handle form submission by calling addSession mutation, then redirect the user to MySessions page */ 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 
+        // Create the sessionInput variable to pass to addSession mutation
         const sessionData = {
             title: title,
             unit: unit,
@@ -95,7 +96,7 @@ const SessionForm = () => {
         };
 
         try {
-            // useMutation addSession to create the session using sessionData as sessionInput
+            // Call addSession to create the session using sessionData
             const { data } = await addSession({
                 variables: {
                     "sessionInput": sessionData,

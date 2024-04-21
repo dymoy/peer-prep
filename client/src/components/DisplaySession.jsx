@@ -1,13 +1,17 @@
-import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_USER} from '../utils/queries';
+/**
+ * @file DisplaySession.jsx
+ * React Component to display data of a given Session object
+ */
 
+import { useQuery } from '@apollo/client';
+import { QUERY_USER} from '../utils/queries';
 import dayjs from 'dayjs';
 import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(CustomParseFormat);
 
 const DisplaySession = ({session}) => {
-
-    // Query user to retrieve username for given ID
+    
+    /* Query user to retrieve username for given ID */
     const getUser = (userId) => {
         const { loading, data } = useQuery(QUERY_USER, {
         variables: {
@@ -18,7 +22,7 @@ const DisplaySession = ({session}) => {
         return data?.user.username || '';
     }
 
-    // Get duration of meeting using start and end times
+    /* Calculate the duration of meeting using start and end times */
     // TODO: Debug - precision giving error
     const getDuration = (startTime, endTime) => {
         const startDate = dayjs(startTime, 'MMM Do, YYYY [at] h:mm a');
