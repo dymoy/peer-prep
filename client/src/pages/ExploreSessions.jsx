@@ -30,15 +30,17 @@ const ExploreSessions = () => {
 
 	/* Determine if the active user is already registered to the session in question */
 	const isAttending = (attendees) => {
+		var attending = false;
+
 		// For each attendee in the Session.attendee array
 		attendees.forEach((attendee) => {
 			// Check if the current active user is already in the array
 			if (attendee._id == Auth.getProfile().data._id) {
-				return true;
+				attending = true;
 			}
 		});
 
-		return false;
+		return attending;
 	}
 
 	/* Handle addAttendee mutation event to register the active user to the Session.attendee array */
@@ -67,7 +69,7 @@ const ExploreSessions = () => {
 				throw new Error(`Failed to remove attendee from the session ${sessionId}.`);
 			}
 		} catch (err){
-			console.log(err);
+			console.error(err);
 		}    
 	}
 

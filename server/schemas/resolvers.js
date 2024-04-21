@@ -49,7 +49,6 @@ const resolvers = {
                     }
                 }).sort({ start_date: 1 });
                 
-                console.log(sessions);
                 return sessions;
             }
             throw new AuthenticationError;

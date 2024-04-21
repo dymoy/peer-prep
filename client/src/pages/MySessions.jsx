@@ -34,15 +34,16 @@ const MySessions = () => {
 
     /* Determine if the active user is already registered to the session in question */
 	const isAttending = (attendees) => {
+        var attending = false;
 		// For each attendee in the Session.attendee array
 		attendees.forEach((attendee) => {
 			// Check if the current active user is already in the array
 			if (attendee._id == Auth.getProfile().data._id) {
-				return true;
+				attending = true;
 			}
 		});
-
-		return false;
+        
+        return attending;
 	}
     
     /* Handle removeAttendee mutation event to remove the active user from the Session.attendee array */
@@ -56,7 +57,7 @@ const MySessions = () => {
 				throw new Error(`Failed to remove attendee from the session ${sessionId}.`);
 			}
 		} catch (err){
-			console.log(err);
+			console.error(err);
 		}    
 	}
 
@@ -95,7 +96,7 @@ const MySessions = () => {
                     <h3 className="no-sessions text-center">
                         No sessions yet :/ 
                         <br /><br />
-                        Click on the Add Session button to create and host your first session!
+                        Register for sessions in the explore page or create your own session!
                     </h3> 
                 ) : ( <>
                     {/* Load the user's saved sessions */}
@@ -116,7 +117,7 @@ const MySessions = () => {
                                                     </div>
                                                 }
                                                 { Auth.loggedIn() && ( Auth.getProfile().data._id == session.host._id ) && (window.location.pathname === '/mysessions') && 
-                                                    // Render an update session button if the user is on the /mysessions page and is the host of the session
+                                                    // Render an update and delete session button if the user is on the /mysessions page and is the host of the session
                                                     <div className='d-flex justify-content-evenly'>
                                                         <button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} type="submit" onClick={ () => handleUpdateSession(session._id) }>Update Session</button>
                                                         <button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} type="submit" onClick={ () => handleDeleteSession(session._id) }>Delete Session</button>
