@@ -119,11 +119,11 @@ const SessionForm = () => {
     }
 
     return (
-        <div id='new-session-main'>
+        <main id='new-session-main'>
             <h4>Let's get prepping! </h4>
             <h5>Enter the details of your session below:</h5>
             
-            <form className="flex-row justify-center justify-space-between-md align-center" onSubmit={handleFormSubmit}>
+            <form className="flex-row justify-center justify-space-between-md" onSubmit={handleFormSubmit}>
             
                 <div className="col-12 col-lg-9">
                     <section className='py-2'>
@@ -204,10 +204,10 @@ const SessionForm = () => {
                         <p className="error-text">* {error} *</p>
                     </div>
                 )}
-                <button className="btn btn-primary" type="submit" style={{ backgroundColor: '#d6d4c7', color: '#9d4836', margin: '40px 40px', fontWeight: 'bold', border: 'none' }}>Create Session!</button>
+                <button className="btn btn-primary my-2" type="submit" style={{ backgroundColor: '#d6d4c7', color: '#9d4836', fontWeight: 'bold', border: 'none' }}>Create Session!</button>
 
             </form>
-        </div>
+        </main>
     );
 }
 
