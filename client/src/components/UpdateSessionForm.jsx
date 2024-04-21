@@ -1,22 +1,23 @@
+/**
+ * @file UpdateSessionForm.jsx
+ * React Component to render the form for the user to make edits to their existing Sessions
+ */
+
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { UPDATE_SESSION } from '../utils/mutations';
-import Auth from '../utils/auth';
 
 const UpdateSessionForm = ({session}) => {
-
-    // Create states to keep track of all form fields to create the Session document
     const [title, setTitle] = useState(session.title);
     const [unit, setUnit] = useState(session.unit);
     const [description, setDescription] = useState(session.description);
     const [start_date, setStartDate] = useState(session.start_date);
     const [end_date, setEndDate] = useState(session.end_date);
     const [link, setLink] = useState(session.link);
-
-    // Create a state for error to notify user when a field value is invalid
     const [error, setError] = useState('');
+    const [updateSession, { updateSessionError }] = useMutation(UPDATE_SESSION);
 
-    // Implement handleInputChange to validate the states of each field 
+    /* Update the state based on form input changes */
     const handleInputChange = (event) => {
         const { name, value } = event.target;
 
@@ -31,7 +32,7 @@ const UpdateSessionForm = ({session}) => {
         }
     };
 
-    // Implment handleDateChange to validate the start date is before the end date, and vice versa
+    /* Validate the start date is before the end date, and vice versa, before updating the states */
     const handleDateChange = (event) => {
         const { name, value } = event.target;
 
@@ -64,7 +65,7 @@ const UpdateSessionForm = ({session}) => {
         }
     }
 
-    // Implement validateFilled to ensure that all fields are not empty
+    /* Ensure that fields are not empty when users click away from the input fields */
     const validateFilled = (event) => {
         const { name, value } = event.target;
 
@@ -77,12 +78,11 @@ const UpdateSessionForm = ({session}) => {
         }
     }
 
-    const [updateSession, { updateSessionError }] = useMutation(UPDATE_SESSION);
-
-    // Implement handleFormSubmit that uses addSession mutation and redirects the user to My Sessions page 
+    /* Handle form submission by calling updateSession mutation, then redirect the user to MySessions page */ 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 
+        // Create the sessionInput variable to pass to updateSession mutation
         const sessionData = {
             _id: session._id,
             title: title,
@@ -94,7 +94,7 @@ const UpdateSessionForm = ({session}) => {
         };
 
         try {
-            // useMutation updateSession to update the session using sessionData as sessionInput
+            // Call updateSession to update the session using sessionData
             const { data } = await updateSession({
                 variables: {
                     "sessionInput": sessionData,

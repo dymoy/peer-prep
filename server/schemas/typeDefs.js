@@ -2,6 +2,7 @@
  * @file typeDefs.js 
  * Define necessary Query and Mutation types in gql. 
  */
+
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
@@ -24,11 +25,6 @@ const typeDefs = gql`
         attendees: [User]
     }
 
-    type Auth {
-        token: ID! 
-        user: User
-    }
-
     input SessionInput {
         _id: ID
         title: String
@@ -41,6 +37,11 @@ const typeDefs = gql`
         attendees: [String]
     }
     
+    type Auth {
+        token: ID! 
+        user: User
+    }
+
     type Query { 
         me: User
         user(id: ID!): User

@@ -5,11 +5,6 @@
 
 import { gql } from '@apollo/client';
 
-/**
- * @query QUERY_ME
- * Executes the me query set up using Apollo Server 
- * Returns a User 
- */
 export const QUERY_ME = gql`
     query me {
         me {

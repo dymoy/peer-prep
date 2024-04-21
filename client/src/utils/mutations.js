@@ -5,11 +5,6 @@
 
 import { gql } from "@apollo/client";
 
-/**
- * @mutation LOGIN_USER
- * Executes the loginUser mutation set up using Apollo Server 
- * Returns an Auth type with a JWT and User 
- */
 export const LOGIN_USER = gql`
     mutation login($email: String!, $password: String!) {
         login(email: $email, password: $password) {
@@ -22,11 +17,6 @@ export const LOGIN_USER = gql`
     }
 `;
 
-/**
- * @mutation ADD_USER
- * Executes the addUser mutation 
- * Returns an Auth type with a JWT and User  
- */
 export const ADD_USER = gql`
     mutation addUser($username: String!, $email: String!, $password: String!) {
         addUser(username: $username, email: $email, password: $password) {
@@ -39,11 +29,6 @@ export const ADD_USER = gql`
     }
 `;
 
-/**
- * @mutation ADD_SESSION
- * Executes the addSession mutation 
- * Returns a Session
- */
 export const ADD_SESSION = gql`
     mutation addSession($sessionInput: SessionInput!) {
             addSession(sessionInput: $sessionInput) {
@@ -114,4 +99,3 @@ export const REMOVE_ATTENDEE = gql`
         }
     }
 `;
-

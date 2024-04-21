@@ -1,11 +1,16 @@
-import UpdateSessionForm from '../components/UpdateSessionForm';
-import { useLocation } from 'react-router-dom';
+/**
+ * @file UpdateSession.jsx
+ * React page that serves the UpdateSessionForm Component for the User to update an existing Session
+ */
 
-import { useQuery, useMutation } from '@apollo/client';
+import { useLocation } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import { QUERY_SINGLE_SESSION } from '../utils/queries';
+import UpdateSessionForm from '../components/UpdateSessionForm';
 import dayjs from 'dayjs';
 
 const UpdateSession = () => {
+    /* Retrieve the sessionId from location state */
     const { state } = useLocation();
     const sessionId = state.sessionId;
 
@@ -18,15 +23,15 @@ const UpdateSession = () => {
 
     if (loading) return null;
 
-    // Format the start date so assign the default value in the UpdateSessionForm
+    /* Format the start_date value to set the default value of the datetime-local input field */
     const startDate = new Date(parseInt(session.start_date));
     const startVal = dayjs(startDate).format('YYYY-MM-DDTHH:mm');
 
-    // Format the end date to assign the default value in the UpdateSessionForm
+    /* Format the end_date value to set the default value of the datetime-local input field */
     const endDate = new Date(parseInt(session.end_date));
     const endVal = dayjs(endDate).format('YYYY-MM-DDTHH:mm');
 
-    // Create the session input object to pass to UpdateSessionForm
+    /* Create the sessionInput variable to pass to the updateSession mutation */
     const formattedSession = {
         _id: sessionId,
         title: session.title,

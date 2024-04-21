@@ -1,40 +1,47 @@
-import { useState } from 'react';
+/**
+ * @file ExploreSessions.jsx 
+ * React page that queries and renders all the existing Sessions 
+ */
 import { useQuery, useMutation } from '@apollo/client';
-
-import DisplaySession from '../components/DisplaySession';
 import { QUERY_ALL_SESSIONS, QUERY_MY_SESSIONS } from '../utils/queries';
 import { ADD_ATTENDEE, REMOVE_ATTENDEE } from '../utils/mutations';
-
+import DisplaySession from '../components/DisplaySession';
 import Auth from '../utils/auth';
 
 const ExploreSessions = () => {
 	const { loading, data } = useQuery(QUERY_ALL_SESSIONS);
 	const allSessions = data?.allSessions || [];
-
 	const { myLoading, myData } = useQuery(QUERY_MY_SESSIONS);
 	const mySessions = myData?.mySessions || [];
 
-	// Helper function to determine if the active user is already registered to the session in question
-	const isAttending = (attendees) => {
-		var attending = false;
-
-		attendees.forEach((attendee) => {
-			if (attendee._id == Auth.getProfile().data._id) {
-				attending = true;
-			}
-		});
-
-		return attending;
-	}
-
-  	// Adds the current auth user to the attendees array of the selected Session
-  	const [addAttendee, { addAttendeeError }] = useMutation(ADD_ATTENDEE, {
+	const [addAttendee, { addAttendeeError }] = useMutation(ADD_ATTENDEE, {
 		refetchQueries: [
 			QUERY_MY_SESSIONS,
 			QUERY_ALL_SESSIONS
 		]
 	});
 
+	const [removeAttendee, { removeAttendeeError }] = useMutation(REMOVE_ATTENDEE, {
+		refetchQueries: [
+			QUERY_MY_SESSIONS,
+			QUERY_ALL_SESSIONS
+		]
+	});
+
+	/* Determine if the active user is already registered to the session in question */
+	const isAttending = (attendees) => {
+		// For each attendee in the Session.attendee array
+		attendees.forEach((attendee) => {
+			// Check if the current active user is already in the array
+			if (attendee._id == Auth.getProfile().data._id) {
+				return true;
+			}
+		});
+
+		return false;
+	}
+
+	/* Handle addAttendee mutation event to register the active user to the Session.attendee array */
 	const handleAddAttendee = async (sessionId) => {
 		try {
 			const { data } = await addAttendee({
@@ -49,14 +56,7 @@ const ExploreSessions = () => {
 		}
 	}
 
-	// Removes the current auth user from the attendees array of the selected Session
-	const [removeAttendee, { removeAttendeeError }] = useMutation(REMOVE_ATTENDEE, {
-		refetchQueries: [
-			QUERY_MY_SESSIONS,
-			QUERY_ALL_SESSIONS
-		]
-	});
-    
+	/* Handle removeAttendee mutation event to remove the active user from the Session.attendee array */
 	const handleRemoveAttendee = async (sessionId) => {
 		try {
 			const { data } = await removeAttendee({
@@ -71,7 +71,7 @@ const ExploreSessions = () => {
 		}    
 	}
 
-	// If no sessions exist in the database, notify the user 
+	/* Check if any sessions exist in the database by checking query results */
     if (!allSessions.length) {
         return <h3 className="no-sessions">No sessions yet :/ Sign up or login to create a session!</h3>;
     }
@@ -90,36 +90,37 @@ const ExploreSessions = () => {
 				Find available study sessions below:
 				</p>
 			</div>
-		
-			<div id="sessions-list">
-				{ loading 
+
+			{/* Load the user's saved sessions */}
+			{ loading 
 				? ( <div>Loading...</div> ) 
 				: (
 					<div className="session-list d-flex justify-content-center"> 
-                        <div id="session-box">
-                            { allSessions && allSessions.map((session) => {
-                                return (
-                                    <div key={session._id} className="card">
-                                        <DisplaySession session={session} />
+						<div id="session-box">
+							{/* Render each session using DisplaySession component */}
+							{ allSessions && allSessions.map((session) => {
+								return (
+									<div key={session._id} className="card">
+										<DisplaySession session={session} />
 										{ Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (!isAttending(session.attendees)) && 
 											// Render a register button if the user is not already attending the session
 											<div className='d-flex justify-content-evenly'>
 												<button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} onClick={ () => handleAddAttendee(session._id) }>Register</button>
 											</div>
 										}
-                                        { Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (isAttending(session.attendees)) && 
-                                            // Render an unregister button if the user is already attending the session 
-                                            <div className='d-flex justify-content-evenly'>
-                                                <button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} onClick={ () => handleRemoveAttendee(session._id) }>Unregister</button>
-                                            </div>
-                                        }
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </div>
-				)}
-			</div>
+										{ Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (isAttending(session.attendees)) && 
+											// Render an unregister button if the user is already attending the session 
+											<div className='d-flex justify-content-evenly'>
+												<button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} onClick={ () => handleRemoveAttendee(session._id) }>Unregister</button>
+											</div>
+										}
+									</div>
+								)
+							})}
+						</div>
+					</div>
+				)
+			}
 		</main>
 	);
 };
