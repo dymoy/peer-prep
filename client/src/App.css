@@ -1,7 +1,8 @@
 /* Navbar styling */
 
-body {
-    height: 100vh;
+html, body, #root {
+    height: 100%;
+    color: #9d4836;
 }
 
 #navigation-bar {
@@ -53,6 +54,7 @@ body {
 main {
     padding: 0px;
     background-color: #9d4836;
+    min-height: 100%;
 }
 
 #welcome-section {
@@ -112,7 +114,6 @@ main {
 #new-session-main,
 #update-session-main {
     padding: 15px;
-    background-color: #9d4836;
     display: flex;
     flex-direction: column;
 }
@@ -125,7 +126,3 @@ main {
 .input-new-session {
     width: 90vw;
 }
-
-
-
-
