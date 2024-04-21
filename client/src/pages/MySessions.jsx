@@ -83,49 +83,53 @@ const MySessions = () => {
           console.error(err);
         }
     }
-      
-    /* Check if any sessions exist for the user by checking query results  */ 
-    if (!mySessions.length) {
-        return <h3 className="no-sessions">No sessions Yet</h3>;
-    }
-
-    if (loading) return null;
 
     return (
         <main>
             {/* Give user a button option to create a session */}
             <Link to="/addsession" className="btn btn-primary" style={{ backgroundColor: '#d6d4c7', color: '#9d4836', margin: '40px 40px', fontWeight: 'bold' }}>+ Add Session</Link>
 
-            {/* Load the user's saved sessions */}
-            { loading 
-                ? ( <div>Loading...</div> )
-                : ( 
-                    <div className="session-list d-flex justify-content-center"> 
-                        <div id="session-box">
-                            {/* Render each session using DisplaySession component */}
-                            { mySessions && mySessions.map((session) => {
-                                return (
-                                    <div key={session._id} className="card">
-                                        <DisplaySession session={session} />
-                                        { Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (isAttending(session.attendees)) && 
-                                            // Render an unregister button if the user is already attending the session 
-                                            <div className='d-flex justify-content-evenly'>
-                                                <button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} onClick={ () => handleRemoveAttendee(session._id) }>Unregister</button>
+			{/* Check if any sessions exist in the database by checking query results */}
+			{ !mySessions.length 
+				? (
+                    <h3 className="no-sessions text-center">
+                        No sessions yet :/ 
+                        <br /><br />
+                        Click on the Add Session button to create and host your first session!
+                    </h3> 
+                ) : ( <>
+                    {/* Load the user's saved sessions */}
+                    { loading 
+                        ? ( <div>Loading...</div> )
+                        : ( 
+                            <div className="session-list d-flex justify-content-center"> 
+                                <div id="session-box">
+                                    {/* Render each session using DisplaySession component */}
+                                    { mySessions && mySessions.map((session) => {
+                                        return (
+                                            <div key={session._id} className="card">
+                                                <DisplaySession session={session} />
+                                                { Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (isAttending(session.attendees)) && 
+                                                    // Render an unregister button if the user is already attending the session 
+                                                    <div className='d-flex justify-content-evenly'>
+                                                        <button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} onClick={ () => handleRemoveAttendee(session._id) }>Unregister</button>
+                                                    </div>
+                                                }
+                                                { Auth.loggedIn() && ( Auth.getProfile().data._id == session.host._id ) && (window.location.pathname === '/mysessions') && 
+                                                    // Render an update session button if the user is on the /mysessions page and is the host of the session
+                                                    <div className='d-flex justify-content-evenly'>
+                                                        <button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} type="submit" onClick={ () => handleUpdateSession(session._id) }>Update Session</button>
+                                                        <button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} type="submit" onClick={ () => handleDeleteSession(session._id) }>Delete Session</button>
+                                                    </div>
+                                                }
                                             </div>
-                                        }
-                                        { Auth.loggedIn() && ( Auth.getProfile().data._id == session.host._id ) && (window.location.pathname === '/mysessions') && 
-                                            // Render an update session button if the user is on the /mysessions page and is the host of the session
-                                            <div className='d-flex justify-content-evenly'>
-                                                <button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} type="submit" onClick={ () => handleUpdateSession(session._id) }>Update Session</button>
-                                                <button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} type="submit" onClick={ () => handleDeleteSession(session._id) }>Delete Session</button>
-                                            </div>
-                                        }
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </div>
-                )
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        )
+                    }
+                </>)
             }
         </main> 
     );

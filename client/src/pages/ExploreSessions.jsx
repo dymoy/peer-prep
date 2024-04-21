@@ -71,55 +71,59 @@ const ExploreSessions = () => {
 		}    
 	}
 
-	/* Check if any sessions exist in the database by checking query results */
-    if (!allSessions.length) {
-        return <h3 className="no-sessions">No sessions yet :/ Sign up or login to create a session!</h3>;
-    }
-
-    if (loading) return null;
-
 	return (
 		<main>
 			<div id="welcome-section">
 				<p>
-				Welcome your one stop shop to collaborate with others on topics you are
-				studying! Access the Study-Sessions section to collaborate
-				with others via virtual meetings. To take the full advantage of this
-				site, please sign up for an account or login. 
-				<br></br><br></br>
-				Find available study sessions below:
+					Welcome your one stop shop to collaborate with others on topics you are
+					studying! Access the Study-Sessions section to collaborate
+					with others via virtual meetings. To take the full advantage of this
+					site, please sign up for an account or login. 
+					<br></br><br></br>
+					Find available study sessions below:
 				</p>
 			</div>
 
-			{/* Load the user's saved sessions */}
-			{ loading 
-				? ( <div>Loading...</div> ) 
-				: (
-					<div className="session-list d-flex justify-content-center"> 
-						<div id="session-box">
-							{/* Render each session using DisplaySession component */}
-							{ allSessions && allSessions.map((session) => {
-								return (
-									<div key={session._id} className="card">
-										<DisplaySession session={session} />
-										{ Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (!isAttending(session.attendees)) && 
-											// Render a register button if the user is not already attending the session
-											<div className='d-flex justify-content-evenly'>
-												<button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} onClick={ () => handleAddAttendee(session._id) }>Register</button>
+			{/* Check if any sessions exist in the database by checking query results */}
+			{ !allSessions.length 
+				? (
+                    <h3 className="no-sessions text-center">
+                        No sessions yet :/ 
+                        <br /><br />
+                        Sign up or Login to create a session!
+                    </h3> 
+                ) : ( <>
+					{/* Load the user's saved sessions */}
+					{ loading 
+						? ( <div>Loading...</div> ) 
+						: (
+							<div className="session-list d-flex justify-content-center"> 
+								<div id="session-box">
+									{/* Render each session using DisplaySession component */}
+									{ allSessions && allSessions.map((session) => {
+										return (
+											<div key={session._id} className="card">
+												<DisplaySession session={session} />
+												{ Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (!isAttending(session.attendees)) && 
+													// Render a register button if the user is not already attending the session
+													<div className='d-flex justify-content-evenly'>
+														<button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} onClick={ () => handleAddAttendee(session._id) }>Register</button>
+													</div>
+												}
+												{ Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (isAttending(session.attendees)) && 
+													// Render an unregister button if the user is already attending the session 
+													<div className='d-flex justify-content-evenly'>
+														<button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} onClick={ () => handleRemoveAttendee(session._id) }>Unregister</button>
+													</div>
+												}
 											</div>
-										}
-										{ Auth.loggedIn() && ( Auth.getProfile().data._id !== session.host._id ) && (isAttending(session.attendees)) && 
-											// Render an unregister button if the user is already attending the session 
-											<div className='d-flex justify-content-evenly'>
-												<button className="btn btn-primary btn-block m-2 py-3 col-md-5" style={{"background": "#769795"}} onClick={ () => handleRemoveAttendee(session._id) }>Unregister</button>
-											</div>
-										}
-									</div>
-								)
-							})}
-						</div>
-					</div>
-				)
+										)
+									})}
+								</div>
+							</div>
+						)
+					}
+				</>)
 			}
 		</main>
 	);
