@@ -19,7 +19,8 @@ const resolvers = {
 
         /* Get the user object by Id */
         user: async (parent, { id }) => {
-            return await User.findOne({ _id: id });
+            const user = User.findOne({ _id: id });
+            return user;
         },
 
         /* Get all existing sessions from the database and sort ascending */
@@ -48,6 +49,7 @@ const resolvers = {
                     }
                 }).sort({ start_date: 1 });
                 
+                console.log(sessions);
                 return sessions;
             }
             throw new AuthenticationError;

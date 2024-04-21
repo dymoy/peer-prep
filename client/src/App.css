@@ -126,3 +126,7 @@ main {
 .input-new-session {
     width: 90vw;
 }
+
+.error-text {
+    color: #ffdc5e;
+}
