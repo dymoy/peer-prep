@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(CustomParseFormat);
 
-const MySessionsList = ({session}) => {
+const DisplaySession = ({session}) => {
 
     // Query user to retrieve username for given ID
     const getUser = (userId) => {
@@ -64,4 +64,4 @@ const MySessionsList = ({session}) => {
     );
 };
 
-export default MySessionsList;
+export default DisplaySession;
