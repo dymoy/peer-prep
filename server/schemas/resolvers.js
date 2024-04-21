@@ -8,7 +8,7 @@ const { signToken, AuthenticationError } = require ('../utils/auth');
 
 const resolvers = {
     Query: {
-        // Get the user object for the current auth session
+        /* Get the user object for the current active User */
         me: async (parent, args, context) => {
             if (context.user) {
                 const user = await User.findOne({ _id: context.user._id})
@@ -17,31 +17,43 @@ const resolvers = {
             throw AuthenticationError;
         },
 
+        /* Get the user object by Id */
         user: async (parent, { id }) => {
             return await User.findOne({ _id: id });
         },
 
-        // Get all sessions from the database 
+        /* Get all existing sessions from the database and sort ascending */
         allSessions: async (parent, args) => {
-            return Session.find().sort({ start_date: 1});
-        },
-
-        // Get the sessions for the user by username
-        mySessions: async(parent, args, context) => {
-            const sessions = await Session.find({ 
-                $or: [
-                    { host: context.user._id },
-                    { attendees: context.user._id }
-                ],
-                start_date: {
+            const sessions = await Session.find({
+                end_date: {
                     $gte: Date.now()
                 }
             }).sort({ start_date: 1 });
-            
+
             return sessions;
         },
 
-        // Get a single session by sessionId
+        /* Get all existing sessions for the user  */
+        mySessions: async(parent, args, context) => {
+            if (context.user) {
+                const sessions = await Session.find({ 
+                    // Check if the user is found in each session's host and attendee field 
+                    // TODO: 'in' needed? 
+                    $or: [
+                        { host: context.user._id },
+                        { attendees: context.user._id }
+                    ],
+                    end_date: {
+                        $gte: Date.now()
+                    }
+                }).sort({ start_date: 1 });
+                
+                return sessions;
+            }
+            throw new AuthenticationError;
+        },
+
+        /* Get a single session by sessionId */
         singleSession: async(parent, { sessionId }) => {
             const session = await Session.findOne({ _id: sessionId }).lean();
 
@@ -50,6 +62,7 @@ const resolvers = {
     }, 
 
     Mutation: {
+        /* Validate the user data and return a token with the user object */
         login: async (parent, { email, password }) => {
             // Check if the email exists in the database 
             const user = await User.findOne({ email });
@@ -70,8 +83,8 @@ const resolvers = {
             return { token, user };
         },
 
+        /*  Create the User object and return it with a token */
         addUser: async (parent, { username, email, password }) => {
-            // Create the user instance and return it with token 
             const user = await User.create(
                 {
                     username: username,
@@ -84,8 +97,8 @@ const resolvers = {
             return { token, user };
         },
 
+        /*  Create the Session, update the User's sessions array, and return the new Session */
         addSession: async (parent, { sessionInput }, context) => {
-            // Check that the user is authenticated
             if (context.user) {
                 // Create the session document
                 const session = await Session.create({
@@ -103,6 +116,7 @@ const resolvers = {
             throw AuthenticationError;
         },
 
+        /* Find the Session by Id and update the contents  */
         updateSession: async (parent, { sessionInput }, context) => {
             if (context.user) {
                 const session = await Session.findOneAndUpdate(
@@ -116,6 +130,7 @@ const resolvers = {
             throw new AuthenticationError;
         },
 
+        /* Find and delete the Session by Id, update the active User's session array, and update all attendee Users' session array */
         deleteSession: async (parent, { sessionId }, context) => {
             if (context.user) {
                 // Delete the session document from the db 
@@ -145,6 +160,7 @@ const resolvers = {
             throw new AuthenticationError;
         },
 
+        /* Find the Session by Id and add the active User to the attendees array */
         addAttendee: async (parent, { sessionId }, context) => {
             if (context.user) {
                 // Add context user Id to the session attendees array
@@ -166,6 +182,7 @@ const resolvers = {
             throw AuthenticationError;
         },
 
+        /* Find the Session by Id and remove the active User from the attendees array */
         removeAttendee: async (parent, { sessionId }, context) => {
             if (context.user) {
                 // Remove context user Id to the session attendees array

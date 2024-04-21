@@ -1,7 +1,11 @@
+/**
+ * @file Session.js 
+ * Define the schema for the mongoose model Session
+ */
+
 const { Schema, model } = require('mongoose');
 const {formatDate} = require('../utils/formatDate');
 
-//const { calculateStartandEndDate } = require('../utils/dateUtils');
 const sessionSchema = new Schema({
     title: {
         type: String,
@@ -30,7 +34,6 @@ const sessionSchema = new Schema({
         required: true
     },
     host: {
-        // Reference the host name, NOT the ID
         type: Schema.Types.ObjectId,
         ref: 'User',
     },
@@ -42,16 +45,12 @@ const sessionSchema = new Schema({
     ],
 });
 
-
- sessionSchema.pre('save', function(next) {
+/* Cast the start_date and end_date to a Date object before creating the Session */
+sessionSchema.pre('save', function(next) {
     this.start_date = new Date (this.start_date);
     this.end_date = new Date (this.end_date);
     next();
 });
-
-
-
-
 
 const Session = model('Session', sessionSchema);
 
