@@ -35,7 +35,6 @@ const resolvers = {
             if (context.user) {
                 const sessions = await Session.find({ 
                     // Check if the user is found in each session's host and attendee field 
-                    // TODO: 'in' needed? 
                     $or: [
                         { host: context.user._id },
                         { attendees: context.user._id }

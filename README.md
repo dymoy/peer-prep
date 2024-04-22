@@ -13,9 +13,15 @@ This webtool was built using Apollo Server and the MERN stack - with React front
 
 
 ## Table of Contents
-- [Installation](#installation)
+- [Installation and Access](#installation-and-access)
 - [Dependencies](#dependencies)
+  - [Front End](#front-end)
+  - [Back End](#back-end)
 - [Usage](#usage)
+  - [Logging in or Signing Up](#logging-in-or-signing-up)
+  - [Creating a Session](#creating-a-session)
+  - [Updating and Deleting a Session](#updating-and-deleting-a-session)
+  - [Registering and Unregistering a Session](#registering-and-unregistering-a-session)
 - [Testing](#testing)
 - [Future Directions](#future-directions)
 - [Contributing](#contributing)
@@ -23,7 +29,7 @@ This webtool was built using Apollo Server and the MERN stack - with React front
 - [Questions](#questions)
 
 
-## Installation 
+## Installation and Access
 There is no installation necessary for this application as it is deployed using [Render](https://docs.render.com/). You can access and use the application [here](https://peer-prep.onrender.com/) or at the following link: https://peer-prep.onrender.com/
 
 If you are interested in running the application locally, please use the following steps:
@@ -34,17 +40,8 @@ If you are interested in running the application locally, please use the followi
 
 
 ## Dependencies
-This project requires the following npm package dependencies for the back-end server, which are included in the `server/package.json` file.
-1. @apollo/server
-2. apollo-server-express
-3. bcrypt
-4. express
-5. graphql
-6. jest
-7. jsonwebtoken
-8. mongoose
-
-Thie project requires the following npm package dependencies for the front-end client, which are included in the `client/package.json` file.
+### Front End
+This project requires the following npm package dependencies for the front-end client, which are included in the `client/package.json` file.
 
 1. @apollo/client
 2. bootstrap
@@ -56,9 +53,19 @@ Thie project requires the following npm package dependencies for the front-end c
 8. react-dom
 9. react-router-dom
 
+### Back End
+This project requires the following npm package dependencies for the back-end server, which are included in the `server/package.json` file.
+1. @apollo/server
+2. apollo-server-express
+3. bcrypt
+4. express
+5. graphql
+6. jest
+7. jsonwebtoken
+8. mongoose
+
 
 ## Usage 
-
 ### Logging in or Signing Up 
 ![Animated Gif of how to login or sign up](./assets/imgs/peer-prep_login_signup.gif)
 
@@ -79,12 +86,13 @@ Once the user has created their own sessions, they will render in the `MySession
 
 When the user is browsing the `ExploreSession` page and see a session they're interested in, they'll have the option to register and save the session to their `MySessions` page. After doing so, the button will re-render and give the user the option to unregister from the session if they'd like. 
 
+
 ## Testing 
 A testing suite was written with [jest](https://www.npmjs.com/package/jest) for the helper function `formatDate`. You may execute the test suite by running `npm run test` on the CLI while in the `server/` working directory. Note that the test suite was written based on PST/ PDT time zone.
 
 The GraphQL queries and mutations were tested locally during development with the [Apollo Sandbox](https://www.apollographql.com/docs/graphos/explorer/sandbox/) studio tool.  
 
-Please refer to the [Installation](#installation) section if you are interested in running and testing the application locally.
+Please refer to the [Installation and Access](#installation-and-access) section if you are interested in running and testing the application locally.
 
 
 ## Future Directions 
