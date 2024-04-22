@@ -56,6 +56,9 @@ const DisplaySession = ({session}) => {
                 <div style={{ fontSize: '1.0rem' }}>
                     Duration: { getDuration(session.start_date, session.end_date) }
                 </div>
+                <div style={{ fontSize: '1.0rem' }}>
+                    Attendees: {session.attendees.length}
+                </div>
                 { (window.location.pathname === '/mysessions')
                     ? (
                         <div style={{ fontSize: '1.0rem' }}>
