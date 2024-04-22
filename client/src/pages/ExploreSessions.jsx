@@ -77,8 +77,8 @@ const ExploreSessions = () => {
 		<main>
 			<div id="welcome-section">
 				<p>
-					Welcome your one stop shop to collaborate with others on topics you are
-					studying! Access the Study-Sessions section to collaborate
+					Welcome to your one stop shop to collaborate with others on topics you are
+					studying! Access the Explore Sessions section to collaborate
 					with others via virtual meetings. To take the full advantage of this
 					site, please sign up for an account or login. 
 					<br></br><br></br>
