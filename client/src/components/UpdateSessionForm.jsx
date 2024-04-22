@@ -9,19 +9,19 @@ import { UPDATE_SESSION } from '../utils/mutations';
 import dayjs from 'dayjs';
 
 const UpdateSessionForm = ({session}) => {
-    const [title, setTitle] = useState(session.title);
-    const [unit, setUnit] = useState(session.unit);
-    const [description, setDescription] = useState(session.description);
-    const [start_date, setStartDate] = useState(session.start_date);
-    const [end_date, setEndDate] = useState(session.end_date);
-    const [link, setLink] = useState(session.link);
-    const [error, setError] = useState('');
-    const [updateSession, { updateSessionError }] = useMutation(UPDATE_SESSION);
-
     /* Helper function to convert a date to a string that can be parsed by datetime-local input field */ 
     const toDateTimeLocal = (date) => {
         return dayjs(date).format('YYYY-MM-DDTHH:mm');
     }
+    
+    const [title, setTitle] = useState(session.title);
+    const [unit, setUnit] = useState(session.unit);
+    const [description, setDescription] = useState(session.description);
+    const [start_date, setStartDate] = useState(toDateTimeLocal(session.start_date));
+    const [end_date, setEndDate] = useState(toDateTimeLocal(session.end_date));
+    const [link, setLink] = useState(session.link);
+    const [error, setError] = useState('');
+    const [updateSession, { updateSessionError }] = useMutation(UPDATE_SESSION);
 
     /* Update the state based on form input changes */
     const handleInputChange = (event) => {

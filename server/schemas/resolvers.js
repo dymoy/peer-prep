@@ -25,11 +25,7 @@ const resolvers = {
 
         /* Get all existing sessions from the database and sort ascending */
         allSessions: async (parent, args) => {
-            const sessions = await Session.find({
-                end_date: {
-                    $gte: Date.now()
-                }
-            }).sort({ start_date: 1 });
+            const sessions = await Session.find().sort({ start_date: 1 });
 
             return sessions;
         },

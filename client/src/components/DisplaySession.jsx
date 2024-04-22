@@ -23,7 +23,6 @@ const DisplaySession = ({session}) => {
     }
 
     /* Calculate the duration of meeting using start and end times */
-    // TODO: Debug - precision giving error
     const getDuration = (startTime, endTime) => {
         const startDate = dayjs(startTime, 'MMM Do, YYYY [at] h:mm a');
         const endDate = dayjs(endTime, 'MMM Do, YYYY [at] h:mm a');
