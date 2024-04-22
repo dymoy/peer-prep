@@ -24,8 +24,7 @@ This webtool was built using Apollo Server and the MERN stack - with React front
 
 
 ## Installation 
-There is no installation necessary for this application as it is deployed using [Render](https://docs.render.com/). You can access and use the application [here](https://peer-prep.onrender.com/) or at the following link:  
-https://peer-prep.onrender.com/
+There is no installation necessary for this application as it is deployed using [Render](https://docs.render.com/). You can access and use the application [here](https://peer-prep.onrender.com/) or at the following link: https://peer-prep.onrender.com/
 
 If you are interested in running the application locally, please use the following steps:
 1. Clone this repository to your local machine. (For reference, visit the [Cloning a Repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) GitHub Docs article.)
@@ -60,6 +59,20 @@ Thie project requires the following npm package dependencies for the front-end c
 
 ## Usage 
 
+### Logging in or Signing Up 
+![Animated Gif of how to login or sign up](./assets/imgs/peer-prep_login_signup.gif)
+
+Upon launching the application, users will be presented the `ExploreSessions` page, where they can browse existing sessions. Users will not be given the option of registering for a session if they are not logged in. By pressing the `Login/ Sign Up` button in the navigation bar, a modal will appear for users to toggle between logging in and signing up. After doing so, an authentication token will be returned for the user so they may take full advantage of the webtool. 
+
+### Creating a Session 
+![Animated Gif of how to create a session](./assets/imgs/peer-prep_addSession.gif)
+
+After logging in, the navigation bar will update to allow users to access the `MySessions` page. There, they can view the sessions that they've created or are registered to. Users will be presented with a button to `Add Session`, which will present them with a form to enter the details of the session they're hosting. An error message will appear if any of the fields are blank or have invalid inputs.
+
+### Updating and Deleting a Session 
+
+
+### Registering and Unregistering a Session
 
 
 ## Testing 
