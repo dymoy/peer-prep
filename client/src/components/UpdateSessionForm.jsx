@@ -17,8 +17,8 @@ const UpdateSessionForm = ({session}) => {
     const [title, setTitle] = useState(session.title);
     const [unit, setUnit] = useState(session.unit);
     const [description, setDescription] = useState(session.description);
-    const [start_date, setStartDate] = useState(toDateTimeLocal(new Date(session.start_date)));
-    const [end_date, setEndDate] = useState(toDateTimeLocal(new Date(session.end_date)));
+    const [start_date, setStartDate] = useState(toDateTimeLocal(new Date));
+    const [end_date, setEndDate] = useState(toDateTimeLocal(dayjs(new Date).add('1', 'hour')));
     const [link, setLink] = useState(session.link);
     const [error, setError] = useState('');
     const [updateSession, { updateSessionError }] = useMutation(UPDATE_SESSION);
