@@ -70,10 +70,14 @@ Upon launching the application, users will be presented the `ExploreSessions` pa
 After logging in, the navigation bar will update to allow users to access the `MySessions` page. There, they can view the sessions that they've created or are registered to. Users will be presented with a button to `Add Session`, which will present them with a form to enter the details of the session they're hosting. An error message will appear if any of the fields are blank or have invalid inputs.
 
 ### Updating and Deleting a Session 
+![Animated Gif of how to update and delete a session](./assets/imgs/peer-prep_updateSession_deleteSession.gif)
 
+Once the user has created their own sessions, they will render in the `MySessions` page. While logged in, they will have the option to update or delete the sessions that they've created. Selecting `Update Session` will render a form so that they can make edits to the Session details. Selecting `Delete Session` will remove the session from the database and update the user and attendees' saved sessions.
 
 ### Registering and Unregistering a Session
+![Animated Gif of how to register and unregister a session](./assets/imgs/peer-prep_addAttendee_removeAttendee.gif)
 
+When the user is browsing the `ExploreSession` page and see a session they're interested in, they'll have the option to register and save the session to their `MySessions` page. After doing so, the button will re-render and give the user the option to unregister from the session if they'd like. 
 
 ## Testing 
 A testing suite was written with [jest](https://www.npmjs.com/package/jest) for the helper function `formatDate`. You may execute the test suite by running `npm run test` on the CLI while in the `server/` working directory. Note that the test suite was written based on PST/ PDT time zone.
