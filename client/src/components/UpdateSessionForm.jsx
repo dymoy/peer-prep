@@ -6,6 +6,7 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { UPDATE_SESSION } from '../utils/mutations';
+import dayjs from 'dayjs';
 
 const UpdateSessionForm = ({session}) => {
     const [title, setTitle] = useState(session.title);
@@ -16,6 +17,11 @@ const UpdateSessionForm = ({session}) => {
     const [link, setLink] = useState(session.link);
     const [error, setError] = useState('');
     const [updateSession, { updateSessionError }] = useMutation(UPDATE_SESSION);
+
+    /* Helper function to convert a date to a string that can be parsed by datetime-local input field */ 
+    const toDateTimeLocal = (date) => {
+        return dayjs(date).format('YYYY-MM-DDTHH:mm');
+    }
 
     /* Update the state based on form input changes */
     const handleInputChange = (event) => {
@@ -163,6 +169,7 @@ const UpdateSessionForm = ({session}) => {
                             type="datetime-local" 
                             name="start_date"
                             onChange={handleDateChange}
+                            min={toDateTimeLocal(Date.now())}
                             value={start_date}
                         />
                     </section>
@@ -174,6 +181,7 @@ const UpdateSessionForm = ({session}) => {
                             type="datetime-local" 
                             name="end_date" 
                             onChange={handleDateChange}
+                            min={toDateTimeLocal(Date.now())}
                             value={end_date}
                         />   
                     </section>
