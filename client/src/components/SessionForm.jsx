@@ -7,13 +7,20 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_SESSION } from '../utils/mutations';
 import Auth from '../utils/auth';
+import dayjs from 'dayjs';
 
 const SessionForm = () => {
+
+    /* Helper function to convert a date to a string that can be parsed by datetime-local input field */ 
+    const toDateTimeLocal = (date) => {
+        return dayjs(date).format('YYYY-MM-DDTHH:mm');
+    }
+
     const [title, setTitle] = useState('');
     const [unit, setUnit] = useState('');
     const [description, setDescription] = useState('');
-    const [start_date, setStartDate] = useState('');
-    const [end_date, setEndDate] = useState('');
+    const [start_date, setStartDate] = useState(toDateTimeLocal(new Date));
+    const [end_date, setEndDate] = useState(toDateTimeLocal(dayjs(new Date).add('1', 'hour')));
     const [link, setLink] = useState('');
     const [error, setError] = useState('');
     const [addSession, { addSessionError }] = useMutation(ADD_SESSION);
@@ -173,7 +180,8 @@ const SessionForm = () => {
                             required
                             type="datetime-local" 
                             name="start_date"
-                            
+                            min={toDateTimeLocal(Date.now())}
+                            value={start_date}
                             onChange={handleDateChange}
                         />
                     </section>
@@ -184,6 +192,8 @@ const SessionForm = () => {
                             required
                             type="datetime-local" 
                             name="end_date" 
+                            min={toDateTimeLocal(Date.now())}
+                            value={end_date}
                             onChange={handleDateChange}
                         />   
                     </section>

@@ -43,10 +43,7 @@ const resolvers = {
                     $or: [
                         { host: context.user._id },
                         { attendees: context.user._id }
-                    ],
-                    end_date: {
-                        $gte: Date.now()
-                    }
+                    ]
                 }).sort({ start_date: 1 });
                 
                 return sessions;
