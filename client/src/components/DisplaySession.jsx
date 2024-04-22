@@ -56,9 +56,17 @@ const DisplaySession = ({session}) => {
                 <div style={{ fontSize: '1.0rem' }}>
                     Duration: { getDuration(session.start_date, session.end_date) }
                 </div>
-                <div style={{ fontSize: '1.0rem' }}>
-                    Session Link: {session.link}
-                </div>
+                { (window.location.pathname === '/mysessions')
+                    ? (
+                        <div style={{ fontSize: '1.0rem' }}>
+                            Session Link: <a href={session.link} target='_blank'>{session.link}</a>
+                        </div>
+                    ) : (
+                        <div style={{ fontSize: '1.0rem', "color": "#769795" }}>
+                            * Login and register to access the meeting link in MySessions *
+                        </div>
+                    )
+                }
             </h4>
             <div className="card-body bg-light" id="session-box-description">
                 <p>{session.description}</p>

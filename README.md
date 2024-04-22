@@ -84,7 +84,7 @@ Once the user has created their own sessions, they will render in the `MySession
 ### Registering and Unregistering a Session
 ![Animated Gif of how to register and unregister a session](./assets/imgs/peer-prep_addAttendee_removeAttendee.gif)
 
-When the user is browsing the `ExploreSession` page and see a session they're interested in, they'll have the option to register and save the session to their `MySessions` page. After doing so, the button will re-render and give the user the option to unregister from the session if they'd like. 
+When the user is browsing the `ExploreSession` page and see a session they're interested in, they'll have the option to register and save the session to their `MySessions` page if they are logged in. After doing so, the button will re-render and give the user the option to unregister from the session if they'd like. After registering for a session, the meeting link will render in the `MySessions` page. 
 
 
 ## Testing 
@@ -118,7 +118,7 @@ This GitHub repository is licensed under the MIT license. Please refer to the li
 This project was developed by the following contributors: 
 1. [dymoy](https://github.com/dymoy)
 2. [ericlyn4s](https://github.com/ericlyn4s)
-3. [mbullock710](https://github.com/mbullock710)
-2. [jackrileynin](https://github.com/jackrileynin)
+3. [jackrileynin](https://github.com/jackrileynin)
+4. [mbullock710](https://github.com/mbullock710)
 
 For any related questions, please contact me via email at <derekymoy@gmail.com>.
